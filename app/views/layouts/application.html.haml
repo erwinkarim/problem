@@ -3,6 +3,7 @@
 	%head
 		%title Problem?
 		= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+		= stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'
 		= stylesheet_link_tag 'http://yui.yahooapis.com/pure/0.6.0/pure-min.css'
 		= csrf_meta_tags 
 		%meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1' }
@@ -12,6 +13,10 @@
 				.pure-menu.pure-menu-horizontal
 					%a.pure-menu-heading.pure-menu-link{ :href => root_path } Problem?
 					%ul.pure-menu-list
+						%li.pure-menu-item
+							%form.pure-form{ :action => '/search' }
+								%input.pure-input-rounded{ :type => 'text', :name => 'q' }
+								%button.pure-button{ :type => 'submit' } Search
 						- if user_signed_in? then
 							%li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover
 								%a.pure-menu-link{ :href => '#' } #{current_user.name  }
@@ -23,6 +28,12 @@
 						- else
 							%li.pure-menu-item
 								%a.pure-menu-link{ :href => new_user_session_path } Login
+						%li.pure-menu-item
+							%a.pure-menu-link{ :href => questions_path } Ask
+						%li.pure-menu-item
+							%a.pure-menu-link{ :href => answers_path } Answer
+
 		= yield
 		= javascript_include_tag 'application', 'data-turbolinks-track' => true 
+		= javascript_include_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'
 

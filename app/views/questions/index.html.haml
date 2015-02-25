@@ -1,0 +1,25 @@
+.pure-g
+	.pure-u-1
+		%h1 Questions Pending; Limitation of human understanding
+.pure-g
+	.pure-u-1
+		%a.pure-button{ :href => '#', :data => { :toggle => 'modal', :target => '#ask-modal' } } Ask A Question
+		.modal.fade#ask-modal
+			.modal-dialog
+				.modal-content
+					.modal-header
+						%button.close{ :type => 'button', :data => { :dismiss => 'modal' } }
+							%span{ :'aria-hidden' => 'true' } &times;
+						%h4.modal-title Ask a Question
+					.modal-body
+						%form.pure-form.pure-form-stacked
+							%label Question (not more than 160 characters)
+							%textarea.pure-input-1{ :rows => 3, :placeholder => 'Ask a simple Question, not more than 160 characters' }
+							%label Comments
+							%textarea.pure-input-1{ :rows => 6, :placeholder => 'Put detail explaination to your question here' }
+					.modal-footer
+						%button.pure-button{ :'data-dismiss' => 'modal' }Close
+						%button.pure-button.pure-button-primary{ :type => 'button' } Submit
+.pure-g
+	.pure-u-1
+		%h1 list of question autoloaded by ajax

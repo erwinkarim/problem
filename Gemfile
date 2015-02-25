@@ -49,4 +49,6 @@ gem 'haml'
 #user authentication
 gem 'devise'
 gem 'net-ldap', :git => 'https://github.com/ruby-ldap/ruby-net-ldap'
-#
+
+#js maintainance
+gem 'paloma'
