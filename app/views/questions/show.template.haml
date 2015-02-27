@@ -1,0 +1,8 @@
+.pure-g
+	.pure-u-1
+		%h1 #{@question.statement}
+	.pure-u-1
+		- if @question.comments.count > 0 then
+			- @question.comments.order(:created_at).limit(10).each do |comment|
+				.pure-u-1
+					%p #{comment.statement} @#{comment.created_at} - #{ User.find(comment.user_id).username }

@@ -4,36 +4,47 @@
 		%title Problem?
 		= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
 		= stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'
-		= stylesheet_link_tag 'http://yui.yahooapis.com/pure/0.6.0/pure-min.css'
 		= csrf_meta_tags 
 		%meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1' }
 	%body
-		.pure-g
-			.pure-u-1-1
-				.pure-menu.pure-menu-horizontal
-					%a.pure-menu-heading.pure-menu-link{ :href => root_path } Problem?
-					%ul.pure-menu-list
-						%li.pure-menu-item
-							%form.pure-form{ :action => '/search' }
-								%input.pure-input-rounded{ :type => 'text', :name => 'q' }
-								%button.pure-button{ :type => 'submit' } Search
+		.navbar.navbar-default
+			.container-fluid
+				.navbar-header
+					%button.navbar-toggle.collapsed{ :type => 'button', :data => { :toggle => 'collapse', :target => '#root' } }
+						%span.sr-only Toggle Navigation
+						%span.icon-bar	
+						%span.icon-bar	
+						%span.icon-bar	
+					%a.navbar-brand{ :href => root_path } Problem?
+				.collapse.navbar-collapse#root
+					%ul.nav.navbar-nav
+						%li
+							%form.navbar-form.navbar-left{ :role => 'search' }
+								.form-group
+									%input.form-control{ :placeholder => 'Search', :type => 'text' }
+									%button.btn.btn-default{ :type => 'button' } Search
+						%li
+							%a{ :href => questions_path } Ask
+						%li
+							%a{ :href => answers_path } Answers
+					%ul.nav.navbar-nav.pull-right
 						- if user_signed_in? then
-							%li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover
-								%a.pure-menu-link{ :href => '#' } #{current_user.name  }
-								%ul.pure-menu-children
-									%li.pure-menu-item
-										%a.pure-menu-link{ :href => '#' } Settings
-									%li.pure-menu-item
-										= link_to 'Logout', destroy_user_session_path , :method => :delete,  :class => 'pure-menu-link'
+							%li
+								%a.dropdown-list{ :href => '#', :role => 'menu', :'data-toggle' => 'dropdown' } 
+									#{ current_user.name }
+									%span.caret
+								%ul.dropdown-menu
+									%li
+										%a{ :href => '#' } Settings
+									%li.divider
+									%li
+										= link_to 'Logout', destroy_user_session_path, :method => :delete
 						- else
-							%li.pure-menu-item
-								%a.pure-menu-link{ :href => new_user_session_path } Login
-						%li.pure-menu-item
-							%a.pure-menu-link{ :href => questions_path } Ask
-						%li.pure-menu-item
-							%a.pure-menu-link{ :href => answers_path } Answer
+							%li
+								%a{ :href => new_user_session_path } Login
 
-		= yield
+		.container
+			= yield
 		= javascript_include_tag 'application', 'data-turbolinks-track' => true 
 		= javascript_include_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'
 

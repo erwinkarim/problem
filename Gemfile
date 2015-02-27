@@ -52,3 +52,5 @@ gem 'net-ldap', :git => 'https://github.com/ruby-ldap/ruby-net-ldap'
 
 #js maintainance
 gem 'paloma'
+
+gem 'font-awesome-rails'

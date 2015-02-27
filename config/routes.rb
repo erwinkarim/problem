@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 	end
 
 	resources :answers, :only => [:index, :new, :show, :update]
-	resources :questions, :only => [:index, :new, :show, :update]
+	resources :questions, :only => [:index, :show, :update, :create]
 	get 'search' => 'search#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

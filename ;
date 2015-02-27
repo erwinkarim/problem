@@ -19,18 +19,18 @@
 						%form#the-question-form
 							- if user_signed_in? then
 								%input#the-asker{ :name => 'userid', :value => current_user.id, :type => 'hidden' }
-							.form-group
+							.group-form
 								%label Question (not more than 160 characters)
-								%textarea.form-control#the-question.pure-input-1{ :name => 'question', :rows => 3, 
+								%textarea#the-question.pure-input-1{ :name => 'question', :rows => 3, 
 									:placeholder => 'Ask a simple Question, not more than 160 characters' }
-							.form-group
+							.group-form
 								%label Comments
-								%textarea.form-control#comments-to-the-question.pure-input-1{ :name => 'comment', :rows => 6, 
+								%textarea#comments-to-the-question.pure-input-1{ :name => 'comment', :rows => 6, 
 									:placeholder => 'Put detail explaination to your question here' }
 						.pure-u-1#ask-modal-status
 					.modal-footer
-						%button.btn.btn-default#close-question-box{ :'data-dismiss' => 'modal' }Close
-						%button.btn.btn-primary#submit-question{ :type => 'button' } Submit
+						%button.pure-button#close-question-box{ :'data-dismiss' => 'modal' }Close
+						%button.pure-button.pure-button-primary#submit-question{ :type => 'button' } Submit
 .pure-g
 	.pure-u-1
 		%h1 list of question autoloaded by ajax
