@@ -1,14 +1,16 @@
-.pure-g
-	.pure-u-1-4
+.row
+	.col-lg-4.col-xs-12
 		= form_for(resource, as: resource_name, url: session_path(resource_name), :html => { :class => 'pure-form pure-form-stacked', :role =>'form', :method => :post } ) do |f| 
 			%fieldset
-				%legend Login
-				= f.label :domain
-				= select_tag "user[domain]", options_for_select(eval(ENV['devise_ldap_domains'])), :class =>'pure-input-1-2' 
-				= f.label :username
-				= f.text_field :username, autofocus: true , :placeholder => "Your Username", :class =>'form-control' 
-				= f.label :password
-				= f.password_field :password, autocomplete: "off", :placeholder => "password" , :class => 'form-control'
-				%button.pure-button.pure-button-primary{ :type => 'submit' } Sign In
+				.form-group
+					= f.label :domain
+					= select_tag "user[domain]", options_for_select(eval(ENV['devise_ldap_domains'])), :class =>'form-control' 
+				.from-group
+					= f.label :username
+					= f.text_field :username, autofocus: true , :placeholder => "Your Username", :class =>'form-control' 
+				.form-group
+					= f.label :password
+					= f.password_field :password, autocomplete: "off", :placeholder => "password" , :class => 'form-control'
+				%button.btn.btn-primary{ :type => 'submit' } Sign In
 
 
