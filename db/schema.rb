@@ -11,39 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150227085724) do
-
-  create_table "answers", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "statement"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "question_id"
-  end
-
-  add_index "answers", ["question_id"], name: "index_answers_on_question_id"
-  add_index "answers", ["user_id"], name: "index_answers_on_user_id"
-
-  create_table "comments", force: :cascade do |t|
-    t.string   "statement"
-    t.integer  "parent_id"
-    t.string   "parent_type"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "user_id"
-  end
-
-  add_index "comments", ["parent_type", "parent_id"], name: "index_comments_on_parent_type_and_parent_id"
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
-
-  create_table "questions", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "statement"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "questions", ["user_id"], name: "index_questions_on_user_id"
+ActiveRecord::Schema.define(version: 20150224085255) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

@@ -24,9 +24,7 @@
 									%input.form-control{ :placeholder => 'Search', :type => 'text' }
 									%button.btn.btn-default{ :type => 'button' } Search
 						%li
-							%a{ :href => questions_path } Ask
-						%li
-							%a{ :href => answers_path } Answers
+							%a{ :href => '#' } Ask
 					%ul.nav.navbar-nav.pull-right
 						- if user_signed_in? then
 							%li
