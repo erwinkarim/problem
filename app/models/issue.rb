@@ -6,6 +6,25 @@ class Issue < ActiveRecord::Base
 	has_many :issue_trackers
 
 	#returns possible status w/ the current issue
+	#
+	#checks the current new_status and give the options for the next step base on workflow
+	#
+	# The work flow
+	# Open -> Acknowledged -> Assigned ->
+	# 	User Uncontactable
+	# 		hang here until resolved
+	# 	Escalate To Vendor
+	# 		hang here until resolved
+	#
+	# 	Resolved
+	# 		Closed
+	# 			-> auto close after 2 weeks on the issue being resolved
+	# 		Reopened
+	# 			-> next option is assigned	
+	#
+	# 	Between Open and Closed, these status can be added at any time
+	# 	Edit Description
+	# 	Add Comment
 	def next_issue_status_options
 
 		#get current status w/o comments and description edits
