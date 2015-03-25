@@ -54,3 +54,6 @@ gem 'net-ldap', :git => 'https://github.com/ruby-ldap/ruby-net-ldap'
 gem 'paloma'
 
 gem 'font-awesome-rails'
+
+#for more granular sql
+gem 'squeel'

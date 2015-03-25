@@ -1,0 +1,18 @@
+.row
+	%h2.page-header Update Status For Issue #{ params[:issue_id] }
+.row
+	- if @issue.issue_trackers.order(:created_at => :desc).first.new_status.name == 'Closed' then
+		%p.lead Issue is closed. Raise a new one
+		%a.btn.btn-primary{ :href => issue_path(@issue) } Okay
+	- else
+		.col-xs-12.col-md-6
+			= form_for @issue_tracker, :url => issue_issue_trackers_path(@issue) do |f|
+				= f.hidden_field :user_id, :value => current_user.id
+				.form-group
+					%label Comment
+					= f.text_area :comment, :class => 'form-control', :rows => 3, :placeholder => 'Put Status Info here'
+				.form-group
+					%label New Status
+					= f.select :new_status_id, @issue.next_issue_status_options_for_select, {}, { :class => 'form-control' }
+				%button.btn.btn-primary{ :type => 'Submit' } Update Issue Status
+

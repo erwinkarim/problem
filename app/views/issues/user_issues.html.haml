@@ -1,0 +1,11 @@
+.row
+	.col-xs-12
+		%h1.page-header
+			Issues
+			%small by #{ @user.name }
+	.col-xs-12
+		- if @issues.empty? then
+			%p.lead You have no Issues
+		- else
+			= render :template => 'issues/list.template', :locals => { :issues => @issues }
+	

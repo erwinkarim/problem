@@ -42,17 +42,21 @@ module Devise
 						user = User.where(:username => params[:user][:username]).first
 
 						if user.nil? then
+							#setup email. some accounts dones't have email
+							email = search_result[:mail].first.nil? ? 
+								"#{params[:user][:username]}@#{params[:user][:domain]}" : search_result[:mail].first
 							user = User.new(:username => params[:user][:username], 
-								:email => search_result[:mail].first, 
+								:email => email,
 								:name => search_result[:displayname].first, 
 								#:username => search_result[:samaccountname].first, 
 								:password => params[:user][:password], :domain => params[:user][:domain] )
 							user.save!
-							params[:user][:email] = search_result[:mail].first
+							params[:user][:email] = email
 						else
-							user.update_attributes({ :email => search_result[:mail].first, 
+							user.update_attributes({ 
 								:name => search_result[:displayname].first, 
-								:password => params[:user][:password], :domain => params[:user][:domain] } )
+								:password => params[:user][:password], :domain => params[:user][:domain] 
+							} )
 						end
 
 						success!(user)

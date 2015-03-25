@@ -4,7 +4,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 	validates :username, presence: true, uniqueness: true
-	has_many :questions
-	has_many :answers
-	has_many :comments
+	has_many :issues	
+	#has_many :assigned_issues, :foreign_key => 'assignee'
 end

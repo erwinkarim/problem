@@ -18,13 +18,13 @@
 					%a.navbar-brand{ :href => root_path } Problem?
 				.collapse.navbar-collapse#root
 					%ul.nav.navbar-nav
-						%li
-							%form.navbar-form.navbar-left{ :role => 'search' }
-								.form-group
-									%input.form-control{ :placeholder => 'Search', :type => 'text' }
-									%button.btn.btn-default{ :type => 'button' } Search
-						%li
-							%a{ :href => '#' } Ask
+						- if user_signed_in? then
+							%li
+								%a{ :href => new_user_issue_path(current_user) } Report An Issue
+					= form_tag( search_issues_path, { :method => :post, :class => 'navbar-form navbar-left', :role => 'search' }) do
+						.form-group
+							%input.form-control{ :type => 'text', :placeholder => 'Issue ID', :name => 'id' }
+						%button.btn.btn-default{ :type => 'submit' } Search
 					%ul.nav.navbar-nav.pull-right
 						- if user_signed_in? then
 							%li
@@ -33,7 +33,7 @@
 									%span.caret
 								%ul.dropdown-menu
 									%li
-										%a{ :href => '#' } Settings
+										%a{ :href => user_issues_path(current_user) } Your Issues
 									%li.divider
 									%li
 										= link_to 'Logout', destroy_user_session_path, :method => :delete
@@ -43,6 +43,11 @@
 
 		.container
 			= yield
+		.container
+			.row-xs-12
+				%footer
+					%p
+						&copy; 2015
 		= javascript_include_tag 'application', 'data-turbolinks-track' => true 
 		= javascript_include_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'
 

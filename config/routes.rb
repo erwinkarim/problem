@@ -1,18 +1,30 @@
 Rails.application.routes.draw do
   devise_for :users, :controllers => { :sessions =>  'users/sessions' }
-	resources :users, :only => [:index, :show], :constraints => { :id => /[^\/]+/ } do
+
+	#resources :users, :only => [:index, :show], :constraints => { :id => /[^\/]+/ } do
+	resources :users, :only => [:index, :show] do
 		get 'settings'
+		resources :issues, :only => [:show, :create, :new,:update, :edit] do
+			collection do
+				get '/' => 'issues#user_issues'
+			end
+		end
 	end
 
-	resources :answers, :only => [:index, :new, :show, :update]
-	resources :questions, :only => [:index, :show, :update, :create]
-	get 'search' => 'search#index'
+	resources :issues, :only => [:index, :show] do
+		resources :issue_trackers, :only => [:new, :create]
+		collection do
+			post 'search'
+		end
+	end
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'welcome#index'
+  #root 'welcome#index'
+  root 'issues#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
