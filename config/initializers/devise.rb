@@ -5,6 +5,7 @@ Devise.setup do |config|
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
   # config.secret_key = 'c6b8f7909f7fee11db07e2c5f33ea92cf61171a8daac494482d3d56d04788474a1a2658428fa1612992e3996dd0056fcc1232d402d11c7e54b88364a792db9dc'
+config.secret_key = '0e1e8e38a55542b7f4df2236b40208aa6cf1a67f3db3942ee4a934a4073c13ff1c4513567122d025e3adf4ada5b9ef538901f4cb596119307152afd0dd7a61f5'
 
  	config.warden do |manager|
 		manager.default_strategies( :scope => :user).unshift :ldap_authenticatable
