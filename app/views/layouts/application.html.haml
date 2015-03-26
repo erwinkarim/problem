@@ -17,14 +17,14 @@
 						%span.icon-bar	
 					%a.navbar-brand{ :href => root_path } Problem?
 				.collapse.navbar-collapse#root
-					%ul.nav.navbar-nav
-						- if user_signed_in? then
+					- if user_signed_in? then
+						%ul.nav.navbar-nav
 							%li
 								%a{ :href => new_user_issue_path(current_user) } Report An Issue
-					= form_tag( search_issues_path, { :method => :post, :class => 'navbar-form navbar-left', :role => 'search' }) do
-						.form-group
-							%input.form-control{ :type => 'text', :placeholder => 'Issue ID', :name => 'id' }
-						%button.btn.btn-default{ :type => 'submit' } Search
+						= form_tag( search_issues_path, { :method => :post, :class => 'navbar-form navbar-left', :role => 'search' }) do
+							.form-group
+								%input.form-control{ :type => 'text', :placeholder => 'Issue ID', :name => 'id' }
+							%button.btn.btn-default{ :type => 'submit' } Search
 					%ul.nav.navbar-nav.pull-right
 						- if user_signed_in? then
 							%li
@@ -47,7 +47,8 @@
 			.row-xs-12
 				%footer
 					%p
-						&copy; 2015
+						&copy; 2015 by Problems or Suggestion, mail 
+						%a{ :href => 'mailto:malekerwin.karim@petronas.com.my' } Malek Erwin Karim
 		= javascript_include_tag 'application', 'data-turbolinks-track' => true 
 		= javascript_include_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'
 
