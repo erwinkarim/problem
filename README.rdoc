@@ -1,28 +1,48 @@
-== README
+== Problem?
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Problem? is a ultra-simple issue-tracking system. It is design to have the system up and running under 10 minutes.
 
-Things you may want to cover:
+It uses your coperate Active Directory to do authentication. Anybody who can login can basically report an issue, 
+take ownership and close the issue. The target user base for this application is a small team of under 20 people
+who would like to track their daily procedual jobs (loading data into server, tracking complaints, etc...)
 
-* Ruby version
+=== Ruby version
+It has been tested to run on Ruby 2.0 and above and using Rails 4.2
 
-* System dependencies
+=== System dependencies
+Requires Active Directory to handle user authentication
 
-* Configuration
+=== Configuration
 
-* Database creation
+First get the latest copy from github and bundle install
 
-* Database initialization
+```
+git clone http://github.com/erwinkarim/problem
+bundle install
+```
 
-* How to run the test suite
+create an `.env` file at the application root and modify the values to your coperate network
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+devise_ldap_host=<your Active Directory Domain Controller>
+devise_ldap_domains={"<domain name short form>" => "<fully qualified domain name; example.com>"}
+devise_ldap_base=<ldap base; DC=EXAMPLE,DC=COM>
+SECRET_KEY_BASE=< results from "rake secret" command>
+```
 
-* Deployment instructions
+create the database and seed the data for the workflow
+```
+rake db:create
+rake db:migrate
+rake db:seed
+```
 
-* ...
+=== Deployment
+
+After following the configuration steps, just run the application with the following command
+
+`RAILS_ENV=production PORT=<port> foreman start`
+
+Just access to your server. You should be able to login and start creating issue, and track them.
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
