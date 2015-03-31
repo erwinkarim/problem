@@ -1,0 +1,22 @@
+.row
+	.col-xs-12
+		%h1.page-header Issue Extra Info Settings
+		= form_tag(issue_extra_info_details_path, { :method => :patch }) do
+			%table.table#details-list
+				%thead
+					%tr
+						%th.col-xs-3 Name
+						%th.col-xs-2 Field Type
+						%th.col-xs-6 Description
+						%th.col-xs-1 Delete
+				%tbody
+					- if @extra_info_details.empty? then
+						%tr#empty-list
+							%td{ :colspan => 4 }
+								%p.lead No Details Created Yet
+					- @extra_info_details.each do |extra_info_detail|
+						= render :template => 'issue_extra_info_details/new.template', 
+							:locals => { :'@extra_info_detail' => extra_info_detail } 
+			%p
+				%button#new-detail.btn.btn-success{ :type => 'button' } New Detail
+				%button.btn.btn-primary{ :type => 'submit' } Update Detail List

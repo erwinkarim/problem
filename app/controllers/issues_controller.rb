@@ -23,7 +23,16 @@ class IssuesController < ApplicationController
 		if @issue.save! then
 			@issue.issue_trackers.new({:new_status_id => IssueStatus.find_by_name('Open').id, 
 				:user_id => params[:user_id], :comment => 'Issue Created by Reporter'}).save!
+
+			#handle extra_info
+			params[:extra_info].each do |extra_info|
+				@issue.issue_extra_infos.new(
+					:extra_info_detail_id => extra_info[1]["detail_id"], 
+					:string_val => extra_info[1]["input"] ).save!
+			end
+
 			redirect_to user_issue_path(params[:user_id], @issue)
+
 		else
 			flash[:alert] = 'Error in saving'
 			redirect_to new_user_issue(params[:user_id])

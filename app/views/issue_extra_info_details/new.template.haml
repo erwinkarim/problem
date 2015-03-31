@@ -1,0 +1,14 @@
+%tr
+	- random_id = @extra_info_detail.id.nil? ? SecureRandom.hex[0..8] : @extra_info_detail.id
+	%td
+		%input.form-control{ :name => "extra_infos[#{random_id}][name]", :type => 'text', 
+			:value => @extra_info_detail.name, :placeholder => 'Field Name' }
+	%td
+		%select.form-control{ :name => "extra_infos[#{random_id}][use_field]" }
+			= options_for_select IssueExtraInfoDetail.use_fields.collect{ |x| [x.first,x.first] }, @extra_info_detail.use_field
+	%td
+		%input.form-control{ :type => 'text', :value => @extra_info_detail.description, :placeholder => 'Description', 
+			:name => "extra_infos[#{random_id}][description]"  }
+	%td
+		%button.btn.btn-danger.delete-row-btn{ :type => 'button' }
+			%i.fa.fa-minus

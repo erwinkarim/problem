@@ -35,6 +35,9 @@
 									%li
 										%a{ :href => user_issues_path(current_user) } Your Issues
 									%li.divider
+									%li 
+										%a{ :href => issue_extra_info_details_path } Extra Issue Details
+									%li.divider
 									%li
 										= link_to 'Logout', destroy_user_session_path, :method => :delete
 						- else

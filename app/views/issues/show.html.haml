@@ -33,6 +33,22 @@
 						%td #{issue_tracker.user.name }
 					%tr
 						%td{ :colspan => 3 } #{issue_tracker.comment }
+	.col-xs-12
+		%h4.page-header Additional Information
+		- if @issue.issue_extra_infos.empty? then
+			%p.lead No Extra Information
+		- else
+			%table.table
+				%thead
+					%tr
+						%th.col-xs-4 Name
+						%th.col-xs-8 Value
+				%tbody
+					- @issue.issue_extra_infos.each do | extra_info |
+						%tr
+							%td #{extra_info.extra_info_detail.name }
+							%td #{extra_info.string_val}
+
 	- if current_user.id == @user.id then
 		.col-xs-12
 			%h4.page-header Additional Action

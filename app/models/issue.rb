@@ -4,6 +4,7 @@ class Issue < ActiveRecord::Base
 	validates_presence_of :description
 
 	has_many :issue_trackers
+	has_many :issue_extra_infos
 
 	#returns possible status w/ the current issue
 	#

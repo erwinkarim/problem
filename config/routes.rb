@@ -13,11 +13,23 @@ Rails.application.routes.draw do
 
 	resources :issues, :only => [:index, :show] do
 		resources :issue_trackers, :only => [:new, :create]
+		resources :issue_extra_infos, :only => [:index] do
+			collection do
+				patch '/' => 'issue_extra_infos#update'
+			end
+		end
 		collection do
 			post 'search'
 		end
 	end
 
+	resources :issue_extra_infos, :only => [:new]
+
+	resources :issue_extra_info_details, :only => [:index, :new] do
+		collection do
+			patch '/' => 'issue_extra_info_details#update'
+		end
+	end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

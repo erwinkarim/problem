@@ -2,4 +2,9 @@
 	.form-group
 		= f.label :description	
 		= f.text_area :description, { :rows => 15 , :class => 'form-control', :placeholder => 'Describe your issue here' }
+	#extra-info-list
+	.form-group
+		%button#extra-detail-btn.btn.btn-success{ :type => 'button' }
+			%i.fa.fa-plus
+			Add Details
 	%button.btn.btn-primary{ :type => 'submit'} Report
