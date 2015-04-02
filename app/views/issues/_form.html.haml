@@ -3,6 +3,10 @@
 		= f.label :description	
 		= f.text_area :description, { :rows => 15 , :class => 'form-control', :placeholder => 'Describe your issue here' }
 	#extra-info-list
+		- unless @issue.issue_extra_infos.nil? then
+			- @issue.issue_extra_infos.each do |extra_info|
+				= render :template => 'issue_extra_infos/form.template', 
+					:locals => { :random_id => extra_info.id, :extra_info => extra_info }
 	.form-group
 		%button#extra-detail-btn.btn.btn-success{ :type => 'button' }
 			%i.fa.fa-plus

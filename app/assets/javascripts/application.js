@@ -11,12 +11,11 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.turbolinks
+//=/require jquery.turbolinks
 //= require jquery_ujs
 //= require paloma
-//= require_tree .
 //= require turbolinks
-//
+//= require_tree .
 
 $(document).on('page:load', function(){
 	Paloma.executeHook();

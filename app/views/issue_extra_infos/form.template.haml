@@ -1,0 +1,12 @@
+.row
+	.form-group.col-xs-3
+		%label Input Type
+		%select.form-control{ :name => "extra_info[#{ random_id }][detail_id]" }
+			= options_for_select IssueExtraInfoDetail.all.collect{|x| [x.name, x.id]}, extra_info.extra_info_detail_id
+	.form-group.col-xs-8
+		%label The Input
+		%input.form-control{ :name => "extra_info[#{random_id}][input]", :type => 'text', :value => extra_info.string_val }
+	.form-group.col-xs-1
+		%label Delete
+		%button.delete-row.btn.btn-danger{ :type => 'button' } 
+			%i.fa.fa-minus

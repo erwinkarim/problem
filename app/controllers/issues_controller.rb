@@ -64,6 +64,22 @@ class IssuesController < ApplicationController
 		@issue = @user.issues.find_by_id(params[:id]) or not_found
 
 		if @issue.update_attributes(issue_params) then
+			#handle extrainfo
+			
+			params[:extra_info].each do |extra_info|
+				issue_extra_info = IssueExtraInfo.find_by_id extra_info[0]
+				if issue_extra_info.nil? then
+					issue_extra_info = @issue.issue_extra_infos.new( 
+						:extra_info_detail_id => extra_info[1][:detail_id], :string_val => extra_info[1][:input]
+					)
+				else
+					issue_extra_info.assign_attributes( 
+						:extra_info_detail_id => extra_info[1][:detail_id], :string_val => extra_info[1][:input]
+					)
+				end
+				issue_extra_info.save!
+			end
+
 			@issue.issue_trackers.new(
 				:new_status_id => IssueStatus.find_by_name('Description Modified').id, 
 				:user_id => current_user.id,

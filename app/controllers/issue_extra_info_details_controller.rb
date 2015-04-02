@@ -3,7 +3,8 @@ class IssueExtraInfoDetailsController < ApplicationController
 		@extra_info_details = IssueExtraInfoDetail.all
 
 		respond_to do |format|
-			format.html
+			format.html { render :tempalte => 'issue_extra_info_details/form.template', 
+				:locals => { :'@extra_info_details' => @extra_info_details } }
 		end
 	end
 
