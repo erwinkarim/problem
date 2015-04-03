@@ -1,9 +1,9 @@
 .row
-	.form-group.col-xs-3
+	.form-group.col-xs-4
 		%label Input Type
 		%select.form-control{ :name => "extra_info[#{ random_id }][detail_id]" }
 			= options_for_select IssueExtraInfoDetail.all.collect{|x| [x.name, x.id]}, extra_info.extra_info_detail_id
-	.form-group.col-xs-8
+	.form-group.col-xs-7
 		%label The Input
 		%input.form-control{ :name => "extra_info[#{random_id}][input]", :type => 'text', :value => extra_info.string_val }
 	.form-group.col-xs-1

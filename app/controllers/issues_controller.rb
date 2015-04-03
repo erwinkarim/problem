@@ -64,8 +64,10 @@ class IssuesController < ApplicationController
 		@issue = @user.issues.find_by_id(params[:id]) or not_found
 
 		if @issue.update_attributes(issue_params) then
-			#handle extrainfo
-			
+			#purne extra_info list (drop extra_info that is not in the list)
+			#find extra_info ids that is not in the new list and delete them	
+			@issue.issue_extra_infos.where.not(:id => params[:extra_info].collect{ |x| x[0] } ).destroy_all
+			#handle existing/new extra_info
 			params[:extra_info].each do |extra_info|
 				issue_extra_info = IssueExtraInfo.find_by_id extra_info[0]
 				if issue_extra_info.nil? then
@@ -79,6 +81,7 @@ class IssuesController < ApplicationController
 				end
 				issue_extra_info.save!
 			end
+
 
 			@issue.issue_trackers.new(
 				:new_status_id => IssueStatus.find_by_name('Description Modified').id, 
