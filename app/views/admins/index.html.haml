@@ -1,0 +1,25 @@
+.row
+	.col-xs-12
+		%h1.page-header Admins
+	.col-xs-12
+		%p Default Admin is #{ ENV['default_admin'] }
+	.col-xs-12
+		%table.table
+			%thead
+				%tr
+					%th.col-xs-8 SAM-Account-Name
+					%th.col-xs-3 created
+					%th.col-xs-1 Delete
+			%tbody#admin-list
+				- if @admins.empty? then
+					%tr#no-one-is-here
+						%td{:colspan => 3 } No one yet
+				- else
+					- @admins.each do |admin|
+						= render :template => 'admins/create.template', :locals => { :'@user' => admin }
+	.col-xs-6
+		%form.form-horizontal#new-admin-form
+			.form-group
+				%input.form-control#new-admin{ :type => 'text', :name => 'username', :placeholder => 'Type username'}
+			.form-group
+				%button.btn.btn-primary#new-admin-button{ :type => 'button' } Add

@@ -1,0 +1,6 @@
+%tr
+	%td #{ @user.samaccountname }
+	%td #{ @user.created_at.localtime }
+	%td
+		%button.remove-user.btn.btn-danger{ :type => 'button', :data => { :id => @user.id }  }
+			%i.fa.fa-minus
