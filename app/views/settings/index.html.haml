@@ -1,0 +1,10 @@
+.row
+	.col-xs-12
+		%h1.page-header Setting Page
+	.col.xs-12
+		%p.lead A collection of settings here
+.row
+	= render :template => 'settings/interface.html', :locals => { :target_picture => 'http://placehold.it/120x120', 
+		:target_path => issue_extra_info_details_path, :target_name => 'Extra Info' }
+	= render :template => 'settings/interface.html', :locals => { :target_picture => 'http://placehold.it/120x120', 
+		:target_path => admins_path, :target_name => 'Admins' }

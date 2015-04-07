@@ -1,4 +1,6 @@
 class AdminsController < ApplicationController
+	before_action :admins_only
+		
 	def index
 		@admins = Admin.all
 	end
@@ -34,4 +36,5 @@ class AdminsController < ApplicationController
 	def search
 		
 	end
+
 end

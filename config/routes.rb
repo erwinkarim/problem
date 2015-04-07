@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'settings/index'
+
   devise_for :users, :controllers => { :sessions =>  'users/sessions' }
 
 	#resources :users, :only => [:index, :show], :constraints => { :id => /[^\/]+/ } do
@@ -37,6 +39,8 @@ Rails.application.routes.draw do
 			get 'search'
 		end
 	end
+
+	resources :settings, :only => [:index]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

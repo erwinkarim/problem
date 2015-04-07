@@ -1,5 +1,9 @@
 class IssuesController < ApplicationController
 	def index
+		if !current_user.admin? then
+			redirect_to user_issues_path(current_user)
+		end
+
 		#get open issues
 		@issues = Issue.where( :id => 
 			IssueTracker.group(:issue_id).having(

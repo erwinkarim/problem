@@ -1,4 +1,5 @@
 class IssueExtraInfoDetailsController < ApplicationController
+	before_action :admins_only, :only => [:index] 
 	def index
 		@extra_info_details = IssueExtraInfoDetail.all
 

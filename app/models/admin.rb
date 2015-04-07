@@ -6,4 +6,5 @@ class Admin < ActiveRecord::Base
 		# search using ldap filters
 		# return list of possible SAM-account-names
 	end
+
 end
