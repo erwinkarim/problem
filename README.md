@@ -24,6 +24,8 @@ bundle install
 create an `.env` file at the application root and modify the values to your coperate network
 
 ```
+	site_brand=Problem?
+	site_title=Problem?
 	devise_ldap_host=<your Active Directory Domain Controller>
 	devise_ldap_domains={"<domain name short form>" => "<fully qualified domain name; example.com>"}
 	devise_ldap_base=<ldap base; DC=EXAMPLE,DC=COM>

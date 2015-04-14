@@ -1,7 +1,7 @@
 !!!!
 %html
 	%head
-		%title Problem?
+		%title #{ ENV["site_title"] }
 		= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
 		= stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'
 		= csrf_meta_tags 
@@ -17,7 +17,7 @@
 						%span.icon-bar	
 						%span.icon-bar	
 						%span.icon-bar	
-					%a.navbar-brand{ :href => root_path } Problem?
+					%a.navbar-brand{ :href => root_path } #{ENV["site_brand"]}
 				.collapse.navbar-collapse#root
 					- if user_signed_in? then
 						%ul.nav.navbar-nav
