@@ -4,10 +4,9 @@
 		%title #{ ENV["site_title"] }
 		= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
 		= stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'
-		= csrf_meta_tags 
+		%meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1' }
 		= javascript_include_tag 'application', 'data-turbolinks-track' => true 
 		= javascript_include_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'
-		%meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1' }
 	%body
 		.navbar.navbar-default
 			.container-fluid
@@ -25,7 +24,7 @@
 								%a{ :href => new_user_issue_path(current_user) } Report An Issue
 						= form_tag( search_issues_path, { :method => :post, :class => 'navbar-form navbar-left', :role => 'search' }) do
 							.form-group
-								%input.form-control{ :type => 'text', :placeholder => 'Issue ID', :name => 'id' }
+								%input.form-control{ :type => 'text', :placeholder => 'ID or Name', :name => 'id' }
 							%button.btn.btn-default{ :type => 'submit' } Search
 					%ul.nav.navbar-nav.pull-right
 						- if user_signed_in? then
@@ -54,5 +53,5 @@
 				%footer
 					%p
 						&copy; 2015 by Problems or Suggestion, mail 
-						%a{ :href => 'mailto:malekerwin.karim@petronas.com.my' } Malek Erwin Karim
+						%a{ :href => "mailto:malekerwin.karim@petronas.com.my?subject=Regarding #{ ENV["site_brand"] }" } Malek Erwin Karim
 

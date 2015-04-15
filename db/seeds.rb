@@ -15,6 +15,7 @@ IssueStatus.create([
 	{ name: 'Closed', description: 'The issue has been resolved and closed by the reporter' },
 	{ name: 'Reopen', description: 'Reporter reopen the case' },
 	{ name: 'Description Modified', description: 'Reporter modify the description of the issue' },
-	{ name: 'Additional Comments', description: 'Comments added on the issue' }
+	{ name: 'Additional Comments', description: 'Comments added on the issue' },
+	{ name: 'Re-assigned', description: 'Re-assign the issue to a new assignee' }
 ])
 

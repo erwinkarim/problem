@@ -10,7 +10,10 @@ who would like to track their daily procedual jobs (loading data into server, tr
 It has been tested to run on Ruby 2.0 and above and using Rails 4.2
 
 ## System dependencies
-Requires Active Directory to handle user authentication
+Problem? requires the following:-
+
+* Active Directory - to handle user authentication
+* sendmail/postfix - required for email notification
 
 ## Configuration
 
@@ -31,6 +34,9 @@ create an `.env` file at the application root and modify the values to your cope
 	devise_ldap_base=<ldap base; DC=EXAMPLE,DC=COM>
 	SECRET_KEY_BASE=< results from "rake secret" command>
 	default_admin=<SAM-account-name of your default admin>
+	network_host=0.0.0.0
+	network_port=5000
+	email_address=<email address that will appear on email notifications>
 ```
 
 create the database and seed the data for the workflow
@@ -39,6 +45,17 @@ create the database and seed the data for the workflow
 	rake db:create
 	rake db:migrate
 	rake db:seed
+```
+
+### Email Configuration
+
+Problem? will use sendmail/postfix to send out email notifications. However, if it doesn't work, try to configreu your sendmail to the following:-
+
+For postfix:-
+```
+	mydomain = your company's domain
+	myorigin = $myhostname
+	relayhost = your coporate mail server (exchange or something)
 ```
 
 ## Deployment

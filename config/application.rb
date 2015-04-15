@@ -22,5 +22,15 @@ module Problem
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+		# mailer settings
+		config.action_mailer.perform_deliveries = true
+		config.action_mailer.raise_delivery_errors = true
+		config.action_mailer.delivery_method = :sendmail
+		config.action_mailer.default_url_options = {
+			#:host => ENV["network_host"] , :port => ENV["network_port"]
+			:host => '192.168.234.100', :port => 5000
+		}
+
   end
 end

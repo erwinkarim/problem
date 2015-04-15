@@ -1,0 +1,7 @@
+%h1 Status Update for #{ @issue.id }
+%p This is to inform that your issue has been updated with a status of "#{ @latest_tracker.new_status.name }" with the following comment:-
+= simple_format( @latest_tracker.comment )
+%p Click #{ link_to 'here', issue_url(@issue) } to view your issue.
+
+%p Regrads,
+%p #{ ENV["site_brand"] }

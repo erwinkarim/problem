@@ -13,9 +13,10 @@ class IssueTrackersController < ApplicationController
 
 		if @issue_tracker.valid? && @issue_tracker.save! then
 			#handle cases where the tracker has been create
-			if( @issue_tracker.new_status.name == 'Assigned') then
+			if( @issue_tracker.new_status.name == 'Assigned' || @issue_tracker.new_status.name == 'Re-assigned') then
 				issue.update_attribute :assignee_id, current_user.id
 			end
+			AppMailer.status_update(issue).deliver_now
 			redirect_to issue_path(params[:issue_id])
 		else
 			flash[:alert] = 'Error in saving'
