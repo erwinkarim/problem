@@ -33,7 +33,7 @@
 						%td #{issue_tracker.new_status.name }
 						%td #{issue_tracker.user.name }
 					%tr
-						%td{ :colspan => 3 } #{issue_tracker.comment }
+						%td{ :colspan => 3 } #{simple_format(issue_tracker.comment) }
 	.col-xs-12
 		%h4.page-header Additional Information
 		- if @issue.issue_extra_infos.empty? then

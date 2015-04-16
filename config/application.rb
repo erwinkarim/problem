@@ -28,8 +28,7 @@ module Problem
 		config.action_mailer.raise_delivery_errors = true
 		config.action_mailer.delivery_method = :sendmail
 		config.action_mailer.default_url_options = {
-			#:host => ENV["network_host"] , :port => ENV["network_port"]
-			:host => '192.168.234.100', :port => 5000
+			:host => ENV["network_host"] , :port => ENV["network_port"]
 		}
 
   end

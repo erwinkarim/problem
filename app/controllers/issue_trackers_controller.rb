@@ -16,7 +16,7 @@ class IssueTrackersController < ApplicationController
 			if( @issue_tracker.new_status.name == 'Assigned' || @issue_tracker.new_status.name == 'Re-assigned') then
 				issue.update_attribute :assignee_id, current_user.id
 			end
-			AppMailer.status_update(issue).deliver_now
+			AppMailer.status_update(issue).deliver_later
 			redirect_to issue_path(params[:issue_id])
 		else
 			flash[:alert] = 'Error in saving'
