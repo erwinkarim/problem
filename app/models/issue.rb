@@ -40,13 +40,25 @@ class Issue < ActiveRecord::Base
 		elsif (current_status == 'Acknowledged') then
 			return IssueStatus.where(:name => ['Assigned'])
 		elsif (current_status == 'Assigned') then
-			return IssueStatus.where(:name => ['User Uncontactable', 'Escalate To Vendor', 'Resolved', 'Re-assigned'])
+			return IssueStatus.where(
+				:name => ['User Uncontactable', 'Escalate To Vendor', 'Resolved', 'Re-assigned', 'In Progress']
+			)
 		elsif (current_status == 'Re-assigned') then
-			return IssueStatus.where(:name => ['User Uncontactable', 'Escalate To Vendor', 'Resolved', 'Re-assigned'])
+			return IssueStatus.where(
+				:name => ['User Uncontactable', 'Escalate To Vendor', 'Resolved', 'Re-assigned', 'In Progress']
+			)
 		elsif (current_status =='User Uncontactable') then
-			return IssueStatus.where(:name => ['User Uncontactable', 'Escalate To Vendor', 'Resolved', 'Re-assigned'])
+			return IssueStatus.where(
+				:name => ['User Uncontactable', 'Escalate To Vendor', 'Resolved', 'Re-assigned', 'In Progress']
+			)
 		elsif (current_status =='Escalate To Vendor') then
-			return IssueStatus.where(:name => ['User Uncontactable', 'Escalate To Vendor', 'Resolved', 'Re-assigned'])
+			return IssueStatus.where(
+				:name => ['User Uncontactable', 'Escalate To Vendor', 'Resolved', 'Re-assigned', 'In Progress']
+			)
+		elsif (current_status =='In Progress') then
+			return IssueStatus.where(
+				:name => ['User Uncontactable', 'Escalate To Vendor', 'Resolved', 'Re-assigned', 'In Progress']
+			)
 		elsif (current_status =='Resolved') then
 			return IssueStatus.where(:name => ['Closed', 'Reopen'])
 		elsif (current_status =='Reopen') then
