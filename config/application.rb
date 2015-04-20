@@ -31,5 +31,7 @@ module Problem
 			:host => ENV["network_host"] , :port => ENV["network_port"]
 		}
 
+		#queue settings
+		config.active_job.queue_adapter = :inline
   end
 end

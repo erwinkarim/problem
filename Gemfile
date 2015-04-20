@@ -58,3 +58,6 @@ gem 'font-awesome-rails'
 
 #for more granular sql
 gem 'squeel'
+
+#queue
+gem 'rufus-scheduler'

@@ -19,4 +19,3 @@ IssueStatus.create([
 	{ name: 'Re-assigned', description: 'Re-assign the issue to a new assignee' },
 	{ name: 'In Progress', description: 'Adding comments for work in progress' }
 ])
-
