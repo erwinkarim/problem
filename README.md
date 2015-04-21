@@ -53,9 +53,9 @@ Problem? will use sendmail/postfix to send out email notifications. However, if 
 
 For postfix:-
 ```
-	mydomain = your company's domain
+	mydomain = your company's domain (eg: example.com)
 	myorigin = $myhostname
-	relayhost = your coporate mail server (exchange or something)
+	relayhost = your coporate mail server (eg: exchange server hostname)
 ```
 
 ## Deployment
