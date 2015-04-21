@@ -10,7 +10,7 @@ class AutoCloseIssueJob < ActiveJob::Base
 
 		issues = Issue.where(:id => 
 			IssueTracker.group(:issue_id).having( 
-				'max(created_at) and new_status_id = ? and created_at < ?', IssueStatus.find_by_name('Resolved').id, 1.day.ago
+				'max(created_at) and new_status_id = ? and created_at < ?', IssueStatus.find_by_name('Resolved').id, 1.week.ago
 			).pluck(:issue_id)
 		)
 
