@@ -29,10 +29,12 @@ class IssuesController < ApplicationController
 				:user_id => params[:user_id], :comment => 'Issue Created by Reporter'}).save!
 
 			#handle extra_info
-			params[:extra_info].each do |extra_info|
-				@issue.issue_extra_infos.new(
-					:extra_info_detail_id => extra_info[1]["detail_id"], 
-					:string_val => extra_info[1]["input"] ).save!
+			if params.has_key? :extra_info then
+				params[:extra_info].each do |extra_info|
+					@issue.issue_extra_infos.new(
+						:extra_info_detail_id => extra_info[1]["detail_id"], 
+						:string_val => extra_info[1]["input"] ).save!
+				end
 			end
 
 			redirect_to user_issue_path(params[:user_id], @issue)
@@ -70,22 +72,29 @@ class IssuesController < ApplicationController
 		if @issue.update_attributes(issue_params) then
 			#purne extra_info list (drop extra_info that is not in the list)
 			#find extra_info ids that is not in the new list and delete them	
-			@issue.issue_extra_infos.where.not(:id => params[:extra_info].collect{ |x| x[0] } ).destroy_all
-			#handle existing/new extra_info
-			params[:extra_info].each do |extra_info|
-				issue_extra_info = IssueExtraInfo.find_by_id extra_info[0]
-				if issue_extra_info.nil? then
-					issue_extra_info = @issue.issue_extra_infos.new( 
-						:extra_info_detail_id => extra_info[1][:detail_id], :string_val => extra_info[1][:input]
-					)
-				else
-					issue_extra_info.assign_attributes( 
-						:extra_info_detail_id => extra_info[1][:detail_id], :string_val => extra_info[1][:input]
-					)
-				end
-				issue_extra_info.save!
+			if params.has_key? :extra_info then
+				@issue.issue_extra_infos.where.not(:id => params[:extra_info].collect{ |x| x[0] } ).destroy_all
+			else
+				#absolutely on extra info. so destroy everything on site
+				@issue.issue_extra_infos.destroy_all
 			end
 
+			#handle existing/new extra_info
+			if params.has_key? :extra_info then
+				params[:extra_info].each do |extra_info|
+					issue_extra_info = IssueExtraInfo.find_by_id extra_info[0]
+					if issue_extra_info.nil? then
+						issue_extra_info = @issue.issue_extra_infos.new( 
+							:extra_info_detail_id => extra_info[1][:detail_id], :string_val => extra_info[1][:input]
+						)
+					else
+						issue_extra_info.assign_attributes( 
+							:extra_info_detail_id => extra_info[1][:detail_id], :string_val => extra_info[1][:input]
+						)
+					end
+					issue_extra_info.save!
+				end
+			end
 
 			@issue.issue_trackers.new(
 				:new_status_id => IssueStatus.find_by_name('Description Modified').id, 
