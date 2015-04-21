@@ -24,7 +24,7 @@
 								%a{ :href => new_user_issue_path(current_user) } Report An Issue
 						= form_tag( search_issues_path, { :method => :post, :class => 'navbar-form navbar-left', :role => 'search' }) do
 							.form-group
-								%input.form-control{ :type => 'text', :placeholder => 'ID or Name', :name => 'id' }
+								%input.form-control{ :type => 'text', :placeholder => 'ID or Name', :name => 'query' }
 							%button.btn.btn-default{ :type => 'submit' } Search
 					%ul.nav.navbar-nav.pull-right
 						- if user_signed_in? then
@@ -54,4 +54,6 @@
 					%p
 						&copy; 2015 by Problems or Suggestion, mail 
 						%a{ :href => "mailto:malekerwin.karim@petronas.com.my?subject=Regarding #{ ENV["site_brand"] }" } Malek Erwin Karim
+					%p
+						Build version #{AppName::REVISION}
 

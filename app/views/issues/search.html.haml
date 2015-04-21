@@ -1,0 +1,6 @@
+.row
+	.col-xs-12
+		%h1.page-header 
+			Search Result
+			%small for #{ params[:query] }
+		= render :template => 'issues/list.template', :locals => { :issues => @issues }

@@ -101,10 +101,31 @@ class IssuesController < ApplicationController
 
 	#  POST   /issues/search(.:format)                       issues#search
 	def search
-		@issue = Issue.find_by_id(params[:id]) or not_found
+		users_id = []
+		issues_id = []
 
+		params[:query].split(" ").each do | pattern | 
+			#get users w/ the pattern
+			users_id.push( User.where('name like ?', "%#{pattern}%").pluck(:id) )
+
+			#get issues have the description matches the query
+			issues_id.push( Issue.where('description like ?', "%#{pattern}%").pluck(:id) )
+		end
+
+		#get issues reported by the person
+		issues_id.push( Issue.where(:user_id => users_id.flatten.uniq).pluck(:id) )
+
+		#get issues assigned to the person
+		issues_id.push( Issue.where(:assignee_id => users_id.flatten.uniq).pluck(:id) )
+
+		#of course, when the query is actually a issue id, plug that in too
+		issues_id.push(params[:query].split(" ") )
+
+		#now return the issues from a list of issue ids
+		@issues = Issue.where(:id => issues_id.flatten.uniq).order(:created_at => :desc)
+		
 		respond_to do |format|
-			format.html{ redirect_to issue_path(@issue) }
+			format.html
 		end
 
 	end
