@@ -32,6 +32,6 @@ module Problem
 		}
 
 		#queue settings
-		config.active_job.queue_adapter = :inline
+		config.active_job.queue_adapter = :delayed_job
   end
 end
