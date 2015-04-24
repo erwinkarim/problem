@@ -1,5 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
 before_filter :configure_sign_in_params
+skip_before_filter :verify_authenticity_token, :only => :destroy
 #, only: [:create]
 
   # GET /resource/sign_in

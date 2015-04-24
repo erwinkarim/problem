@@ -37,10 +37,13 @@ class IssuesController < ApplicationController
 				end
 			end
 
+			#send issue creation email
+			
+			flash[:success] = "Issue #{@issue.id} created"
 			redirect_to user_issue_path(params[:user_id], @issue)
 
 		else
-			flash[:alert] = 'Error in saving'
+			flash[:alert] = 'Error in saving: ' + @issue.errors.full_messages.join(';')
 			redirect_to new_user_issue(params[:user_id])
 		end
 	end
@@ -101,9 +104,10 @@ class IssuesController < ApplicationController
 				:user_id => current_user.id,
 				:comment => 'Reporter Update Issue Description'
 			).save!
+			flash[:sucess] = "Issue #{@issue.id} updated"
 			redirect_to user_issue_path(@user,@issue)
 		else
-			flash[:alert] = 'Error is updating issue'
+			flash[:alert] = 'Error is updating issue: ' + @issue.errors.full_messages.join(';') 
 			redirect_to edit_user_issue_path(@user, @issue)
 		end
 	end

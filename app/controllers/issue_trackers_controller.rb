@@ -17,9 +17,10 @@ class IssueTrackersController < ApplicationController
 				issue.update_attribute :assignee_id, current_user.id
 			end
 			AppMailer.status_update(issue).deliver_later
+			flash[:success] =  "Issue #{issue.id} updated"
 			redirect_to issue_path(params[:issue_id])
 		else
-			flash[:alert] = 'Error in saving'
+			flash[:alert] = 'Error in generating issue_status: ' + @issue_tracker.errors.full_messages.join(';')
 			redirect_to new_issue_issue_tracker_path(params[:issue_id], :issue_tracker => @issue_tracker)
 		end
 	end

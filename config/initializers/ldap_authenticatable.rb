@@ -19,7 +19,10 @@ module Devise
 						
 					if ldap.bind
 						valid_login = true
-		
+
+						#save the ldap session as session variable
+						session[:ldap] = ldap.to_yaml
+
 						#find the user
 						filter = Net::LDAP::Filter.eq( 'samaccountname', params[:user][:username] )
 						search_result = ldap.search( :base => ENV['devise_ldap_base'], :filter => filter).first
@@ -35,6 +38,8 @@ module Devise
 						else
 							in_group = true
 						end	
+					else
+							session[:ldap] = nil
 					end
 
 					if valid_login && in_group then
