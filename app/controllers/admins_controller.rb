@@ -37,4 +37,8 @@ class AdminsController < ApplicationController
 		
 	end
 
+	# GET /admins/report
+	# show report on  admin's performance
+	def report
+	end
 end
