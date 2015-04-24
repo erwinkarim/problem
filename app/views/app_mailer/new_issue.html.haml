@@ -1,0 +1,8 @@
+%h1 Issue #{ @issue.id } created
+
+%p This is to inform that your issue has been created with the following description:-
+= simple_format( @issue.description )
+%p Click #{ link_to 'here', issue_url(@issue) } to view your issue.
+
+%p Regrads,
+%p #{ ENV["site_brand"] }

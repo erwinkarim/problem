@@ -7,6 +7,16 @@ class AppMailer < ApplicationMailer
 		mail(:to => user.email, :subject => "#{ENV["site_brand"]}: Test") 
 	end
 
+	def new_issue(issue)
+		@user = User.find_by_id(issue.user_id)
+		@issue = issue
+
+		mail(
+			:to => @user.email,
+			:subject => "#{ENV["site_brand"]}: Issue #{ @issue.id } created"
+		)
+	end
+
 	def status_update(issue)
 		@user = User.find_by_id(issue.user_id)
 		@issue = issue

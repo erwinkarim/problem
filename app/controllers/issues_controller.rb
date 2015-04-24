@@ -38,6 +38,7 @@ class IssuesController < ApplicationController
 			end
 
 			#send issue creation email
+			AppMailer.new_issue(@issue).deliver_later
 			
 			flash[:success] = "Issue #{@issue.id} created"
 			redirect_to user_issue_path(params[:user_id], @issue)
