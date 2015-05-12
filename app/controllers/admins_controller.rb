@@ -45,5 +45,6 @@ class AdminsController < ApplicationController
 	# GET    /admins/setup
 	# show setup page
 	def setup
+		@categories = Setting.all.pluck(:category).uniq
 	end
 end

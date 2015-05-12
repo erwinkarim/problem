@@ -1,3 +1,19 @@
 .row
 	.col-xs-12
-		%h2.page-header Setup
+		%h2.page-header Server Setup
+	.col-xs-12
+		= form_tag
+		- @categories.each do |category|
+			%h3.page-header #{category}
+			%table.table
+				%thead
+					%tr
+						%th.col-xs-6 Key
+						%th.col-xs-6 Value
+				%tbody
+					- Setting.where(:category => category).each do |setting|
+						%tr
+							%td #{ setting.key }
+							%td
+								%input.form-control{ :type => 'text', :value => setting.value }
+		%button.btn.btn-primary{ :type => 'button' } Update

@@ -19,3 +19,16 @@ IssueStatus.create([
 	{ name: 'Re-assigned', description: 'Re-assign the issue to a new assignee' },
 	{ name: 'In Progress', description: 'Adding comments for work in progress' }
 ])
+
+Setting.create([
+	{ category: 'site', key: 'Brand' },
+	{ category: 'site', key: 'Title' },
+	{ category: 'devise', key: 'ldap_host' },
+	{ category: 'devise', key: 'ldap_domains' },
+	{ category: 'devise', key: 'ldap_base' },
+	{ category: 'devise', key: 'req_groups' },
+	{ category: 'devise', key: 'check_group' },
+	{ category: 'email', key: 'network_host' },
+	{ category: 'email', key: 'network_port' },
+	{ category: 'email', key: 'reply_address' }
+])

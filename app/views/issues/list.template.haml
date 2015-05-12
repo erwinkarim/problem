@@ -1,7 +1,8 @@
-%table.table.table-striped.table-responsive
+%table.table.table-striped.table-responsive.sortable
+	%caption Note: Table is sortable
 	%thead
 		%tr
-			%th.col-xs-1 ID
+			%th.col-xs-1{ :'data-defaultsort' => 'desc' } ID
 			%th.col-xs-5 Description
 			%th.col-xs-1 Opened
 			%th.col-xs-2 Reporter By
