@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 	# manage admin users
 	resources :admins, :only => [:index, :create, :destroy] do
 		collection do
+			get 'setup'
 			get 'search'
 			get 'report'
 		end

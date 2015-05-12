@@ -41,4 +41,9 @@ class AdminsController < ApplicationController
 	# show report on  admin's performance
 	def report
 	end
+
+	# GET    /admins/setup
+	# show setup page
+	def setup
+	end
 end

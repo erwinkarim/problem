@@ -33,5 +33,8 @@ module Problem
 
 		#queue settings
 		config.active_job.queue_adapter = :delayed_job
+
+		#force ssl
+		#config.force_ssl = true
   end
 end
