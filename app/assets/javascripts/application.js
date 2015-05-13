@@ -22,7 +22,7 @@ bootstrapSortableReSort = function(){
 };
 
 $(document).on('page:change', function(){
-	bootstrapSortableReSort();
+	$.bootstrapSortable();
 });
 
 $(document).on('page:load', function(){
