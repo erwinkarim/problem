@@ -16,11 +16,6 @@
 //= require paloma
 //= require turbolinks
 //= require_tree .
-var bootstrapSortableReSort;
-bootstrapSortableReSort = function(){
-	$.bootstrapSortable();
-};
-
 $(document).on('page:change', function(){
 	$.bootstrapSortable();
 });
