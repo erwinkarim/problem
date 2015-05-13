@@ -47,4 +47,19 @@ class AdminsController < ApplicationController
 	def setup
 		@categories = Setting.all.pluck(:category).uniq
 	end
+
+	def update_setup
+		params[:settings].each do |category|
+			Rails.logger.info "category => #{category[0]}"
+			category[1].each do |key, value|
+				Rails.logger.info "key => #{key}, value => #{value}"
+				Setting.setValue category, key, value
+			end 
+		end
+		
+
+		Problem.const_set(:Settings, Setting.loadIntoMemory)
+
+		redirect_to setup_admins_path
+	end
 end

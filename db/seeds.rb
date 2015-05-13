@@ -21,8 +21,8 @@ IssueStatus.create([
 ])
 
 Setting.create([
-	{ category: 'site', key: 'Brand' },
-	{ category: 'site', key: 'Title' },
+	{ category: 'site', key: 'brand' },
+	{ category: 'site', key: 'title' },
 	{ category: 'devise', key: 'ldap_host' },
 	{ category: 'devise', key: 'ldap_domains' },
 	{ category: 'devise', key: 'ldap_base' },

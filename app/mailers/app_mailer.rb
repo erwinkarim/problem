@@ -4,7 +4,7 @@ class AppMailer < ApplicationMailer
 
 	def test(user)
 		@user = user
-		mail(:to => user.email, :subject => "#{ENV["site_brand"]}: Test") 
+		mail(:to => user.email, :subject => "#{Problem::Settings[:site][:brand] }: Test") 
 	end
 
 	def new_issue(issue)
@@ -13,7 +13,7 @@ class AppMailer < ApplicationMailer
 
 		mail(
 			:to => @user.email,
-			:subject => "#{ENV["site_brand"]}: Issue #{ @issue.id } created"
+			:subject => "#{Problem::Settings[:site][:brand]}: Issue #{ @issue.id } created"
 		)
 	end
 
@@ -24,7 +24,7 @@ class AppMailer < ApplicationMailer
 		
 		mail(
 			:to => @user.email, 
-			:subject => "#{ENV["site_brand"]}: Status for Issue #{ @issue.id } updated to #{@latest_tracker.new_status.name}"
+			:subject => "#{Problem::Settings[:site][:brand]}: Status for Issue #{ @issue.id } updated to #{@latest_tracker.new_status.name}"
 		)
 	end
 end

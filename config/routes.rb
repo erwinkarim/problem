@@ -37,6 +37,7 @@ Rails.application.routes.draw do
 	resources :admins, :only => [:index, :create, :destroy] do
 		collection do
 			get 'setup'
+			post 'setup' => 'admins#update_setup'
 			get 'search'
 			get 'report'
 		end

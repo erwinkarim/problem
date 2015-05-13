@@ -7,9 +7,9 @@ module Devise
 			def authenticate!
 				if params[:user]
 					ldap = Net::LDAP.new
-					ldap.host = ENV['devise_ldap_host']
+					ldap.host = Problem::Settings[:devise][:ldap_host]
 					ldap.port = 636
-					ldap.base = ENV['devise_ldap_base']
+					ldap.base = Problem::Settings[:devise][:ldap_base]
 					ldap.encryption :simple_tls
 					#ldap.auth "#{login}@#{params[:user][:domain]}", password
 					ldap.auth "#{params[:user][:username]}@#{params[:user][:domain]}", password
@@ -25,12 +25,12 @@ module Devise
 
 						#find the user
 						filter = Net::LDAP::Filter.eq( 'samaccountname', params[:user][:username] )
-						search_result = ldap.search( :base => ENV['devise_ldap_base'], :filter => filter).first
+						search_result = ldap.search( :base => ldap.base , :filter => filter).first
 
 						#check if the user is in the proper group
-						if ENV['devise_check_group'] == 'true' then
+						if Problem::Settings[:devise][:check_group] == 'true' then
 							group_search_results = ldap.search( :base => search_result[:dn].first, 
-								:filter => Net::LDAP::Filter.ex( "memberof:1.2.840.113556.1.4.1941", ENV['devise_req_groups']),
+								:filter => Net::LDAP::Filter.ex( "memberof:1.2.840.113556.1.4.1941", Problem::Settings[:devise][:req_groups]),
 								:scope => Net::LDAP::SearchScope_BaseObject)
 							if group_search_results.length == 1 then
 								in_group = true

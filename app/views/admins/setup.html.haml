@@ -15,5 +15,6 @@
 						%tr
 							%td #{ setting.key }
 							%td
-								%input.form-control{ :type => 'text', :value => setting.value }
-		%button.btn.btn-primary{ :type => 'button' } Update
+								%input.form-control{ :type => 'text', :name => "settings[#{category}][#{setting.key}]", 
+									:value => setting.value }
+		%button.btn.btn-primary{ :type => 'submit' } Update
