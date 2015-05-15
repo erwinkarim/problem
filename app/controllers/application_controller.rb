@@ -1,5 +1,12 @@
 class ApplicationController < ActionController::Base
-	before_action :authenticate_user!	
+	before_action :authenticate_user!
+	#before_action :check_setup
+
+	#go to the page after sign in
+	def after_sign_in_path_for(resource)
+		request.env['omniauth.origin'] || stored_location_for(resource) || root_path
+	end
+
 	def not_found
 		raise ActionController::RoutingError.new('Not Found')
 		#raise ActiveRecord::RecordNotFound
@@ -18,6 +25,21 @@ class ApplicationController < ActionController::Base
 	private
 
 	def admins_only
-		redirect_to issues_path(current_user) unless current_user.admin?
+		if !Problem::Settings.getValue(:devise, :ldap_host).nil? then
+			redirect_to issues_path(current_user) unless current_user.admin?
+		end
+	end
+
+	def check_setup
+		if Problem::Settings.getValue(:devise, :ldap_host).nil? then
+			#prevent loop back
+				redirect_to setup_admins_path
+		else
+			#:authenticate_users!
+			Rails.logger.info "redirect to new_user_session_path"
+			redirect_to new_user_session_path
+		end
+		Rails.logger.info "do nothing"
+		Rails.logger.info request.env['HTTP_REFERER']
 	end
 end

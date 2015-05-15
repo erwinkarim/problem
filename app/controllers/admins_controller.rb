@@ -58,8 +58,12 @@ class AdminsController < ApplicationController
 		end
 		
 
-		Problem.const_set(:Settings, Setting.loadIntoMemory)
+		Problem::Settings.loadIntoMemory
 
 		redirect_to setup_admins_path
+	end
+
+	def check_setup
+		Rails.logger.info "check setup"
 	end
 end

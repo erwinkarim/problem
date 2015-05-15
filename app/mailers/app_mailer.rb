@@ -1,6 +1,6 @@
 class AppMailer < ApplicationMailer
 
-	default from: ENV["email_address"]
+	default from: Problem::Settings[:email][:reply_address]
 
 	def test(user)
 		@user = user

@@ -17,7 +17,7 @@ class AutoCloseIssueJob < ActiveJob::Base
 		issues.each do |issue|
 			issue.issue_trackers.new(
 				:new_status_id => IssueStatus.find_by_name('Closed').id,
-				:comment => "Issue Auto Close by #{ENV["site_brand"]}",
+				:comment => "Issue Auto Close by #{Problem::Settings[:site][:brand]}",
 				:user_id => issue.user_id
 			).save!
 

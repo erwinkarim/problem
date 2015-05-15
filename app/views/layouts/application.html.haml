@@ -1,7 +1,7 @@
 !!!!
 %html
 	%head
-		%title #{ Problem::Settings[:site][:title] or "Problem?" }
+		%title #{ Setting.getValue('site','title') or "Problem?" }
 		= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
 		= stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'
 		%meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1' }
@@ -16,7 +16,7 @@
 						%span.icon-bar	
 						%span.icon-bar	
 						%span.icon-bar	
-					%a.navbar-brand{ :href => root_path } #{ Problem::Settings[:site][:brand] or "Problem?" }
+					%a.navbar-brand{ :href => root_path } #{ Setting.getValue('site', 'brand') or "Problem?" }
 				.collapse.navbar-collapse#root
 					- if user_signed_in? then
 						%ul.nav.navbar-nav
@@ -59,7 +59,7 @@
 				%footer
 					%p
 						&copy; 2015 by Problems or Suggestion, mail 
-						%a{ :href => "mailto:malekerwin.karim@petronas.com.my?subject=Regarding #{ Problem::Settings[:site][:brand] or 'Problem?' }" }  Malek Erwin Karim
+						%a{ :href => "mailto:malekerwin.karim@petronas.com.my?subject=Regarding #{ Setting.getValue('site', 'brand') or 'Problem?' }" }  Malek Erwin Karim
 					%p
 						Build version #{Problem::REVISION}
 

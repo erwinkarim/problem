@@ -39,12 +39,10 @@ create an `.env` file at the application root and modify the values to your cope
 	email_address=<email address that will appear on email notifications>
 ```
 
-create the database and seed the data for the workflow
+setup the database 
 
 ```
-	rake db:create
-	rake db:migrate
-	rake db:seed
+	rake db:setup
 ```
 
 ### Email Configuration

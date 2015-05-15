@@ -2,11 +2,18 @@ class Setting < ActiveRecord::Base
 	validates :key, :uniqueness => { :scope => :category, :message => "once unique value per category" }
 
 	def self.getValue category, key
-		Setting.where(:category => category, :key => key).first
+		if ActiveRecord::Base.connection.table_exists? 'settings' then
+			handle = Setting.where(:category => category, :key => key).first
+			return handle.nil? ? nil : handle.value
+		else
+			nil
+		end
 	end
 
 	def self.setValue category, key,value
-		Setting.where(:category => category, :key => key).first.update_attribute(:value ,value)
+		if ActiveRecord::Base.connection.table_exists? 'settings' then
+			Setting.where(:category => category, :key => key).first.update_attribute(:value ,value)
+		end
 	end
 
 	def self.loadIntoMemory
@@ -19,4 +26,5 @@ class Setting < ActiveRecord::Base
 			result = result
 		end
 	end
+
 end

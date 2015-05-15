@@ -21,14 +21,9 @@ IssueStatus.create([
 ])
 
 Setting.create([
-	{ category: 'site', key: 'brand' },
-	{ category: 'site', key: 'title' },
-	{ category: 'devise', key: 'ldap_host' },
-	{ category: 'devise', key: 'ldap_domains' },
-	{ category: 'devise', key: 'ldap_base' },
-	{ category: 'devise', key: 'req_groups' },
-	{ category: 'devise', key: 'check_group' },
-	{ category: 'email', key: 'network_host' },
-	{ category: 'email', key: 'network_port' },
-	{ category: 'email', key: 'reply_address' }
+	{ category: 'site', key: 'brand', HelpText: 'Your Brand, recommended single word like Problem?' },
+	{ category: 'site', key: 'title', HelpText: 'The text will appear at the top' },
+	{ category: 'email', key: 'network_host', HelpText: 'The hostname to use when doing linking at email' },
+	{ category: 'email', key: 'network_port', HelpText: 'The port to use when doing linking at email' },
+	{ category: 'email', key: 'reply_address', HelpText: 'The reply address when Problem? sending out emails' }
 ])

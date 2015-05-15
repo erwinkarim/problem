@@ -29,3 +29,10 @@ AdminsController.prototype.index = function(){
 		});
 	});
 };
+
+AdminsController.prototype.setup = function(){
+	console.log('loaded admin/setup')
+	$(document).ready(function(){
+		$('[data-toggle="popover"]').popover();
+	});
+};
