@@ -4,7 +4,7 @@ Rails.application.configure do
 		config.action_mailer.raise_delivery_errors = true
 		config.action_mailer.delivery_method = :sendmail
 		config.action_mailer.default_url_options = {
-			:host => Problem::Settings.getValue(:email, :network_host),
-			:port => Problem::Settings.getValue(:email, :network_port)
+			:host => ENV['email_network_host'],
+			:port => ENV['email_network_port']
 		}
 end

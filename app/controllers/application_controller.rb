@@ -25,9 +25,7 @@ class ApplicationController < ActionController::Base
 	private
 
 	def admins_only
-		if !Problem::Settings.getValue(:devise, :ldap_host).nil? then
-			redirect_to issues_path(current_user) unless current_user.admin?
-		end
+		redirect_to issues_path(current_user) unless current_user.admin?
 	end
 
 	def check_setup

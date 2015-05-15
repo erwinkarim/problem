@@ -4,4 +4,4 @@
 %p Click #{ link_to 'here', issue_url(@issue) } to view your issue.
 
 %p Regrads,
-%p #{ Problem::Settings[:site][:brand] }
+%p #{ Setting.getValue('site', 'brand') }

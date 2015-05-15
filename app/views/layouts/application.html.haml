@@ -41,7 +41,7 @@
 											%a{ :href => settings_path } Settings
 									%li.divider
 									%li
-										= link_to 'Logout', destroy_user_session_path, :method => :delete
+										= link_to 'Logout', destroy_user_session_path
 						- else
 							%li
 								%a{ :href => new_user_session_path } Login

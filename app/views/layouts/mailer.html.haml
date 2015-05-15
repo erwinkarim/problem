@@ -1,7 +1,7 @@
 !!!!
 %html
 	%head
-		%title #{ Problem::Settings[:site][:title] }
+		%title #{ Setting.getValue('site', 'title') }
 	%body
 		.container
 			= yield

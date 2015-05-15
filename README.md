@@ -27,13 +27,11 @@ bundle install
 create an `.env` file at the application root and modify the values to your coperate network
 
 ```
-	site_brand=Problem?
-	site_title=Problem?
 	devise_ldap_host=<your Active Directory Domain Controller>
 	devise_ldap_domains={"<domain name short form>" => "<fully qualified domain name; example.com>"}
 	devise_ldap_base=<ldap base; DC=EXAMPLE,DC=COM>
-	SECRET_KEY_BASE=< results from "rake secret" command>
 	default_admin=<SAM-account-name of your default admin>
+	SECRET_KEY_BASE=< results from "rake secret" command>
 	network_host=0.0.0.0
 	network_port=5000
 	email_address=<email address that will appear on email notifications>
@@ -42,7 +40,7 @@ create an `.env` file at the application root and modify the values to your cope
 setup the database 
 
 ```
-	rake db:setup
+	RAILS_ENV=production rake db:setup
 ```
 
 ### Email Configuration

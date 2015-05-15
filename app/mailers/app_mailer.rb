@@ -1,10 +1,10 @@
 class AppMailer < ApplicationMailer
 
-	default from: Problem::Settings[:email][:reply_address]
+	default from: ENV['email_reply_address']
 
 	def test(user)
 		@user = user
-		mail(:to => user.email, :subject => "#{Problem::Settings[:site][:brand] }: Test") 
+		mail(:to => user.email, :subject => "#{Setting.getValue('site', 'brand') }: Test") 
 	end
 
 	def new_issue(issue)
@@ -13,7 +13,7 @@ class AppMailer < ApplicationMailer
 
 		mail(
 			:to => @user.email,
-			:subject => "#{Problem::Settings[:site][:brand]}: Issue #{ @issue.id } created"
+			:subject => "#{Setting.getValue('site', 'brand') }: Issue #{ @issue.id } created"
 		)
 	end
 
@@ -24,7 +24,7 @@ class AppMailer < ApplicationMailer
 		
 		mail(
 			:to => @user.email, 
-			:subject => "#{Problem::Settings[:site][:brand]}: Status for Issue #{ @issue.id } updated to #{@latest_tracker.new_status.name}"
+			:subject => "#{Setting.getValue('site', 'brand') }: Status for Issue #{ @issue.id } updated to #{@latest_tracker.new_status.name}"
 		)
 	end
 end

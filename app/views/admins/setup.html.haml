@@ -17,7 +17,7 @@
 							%td #{ setting.key }
 							%td
 								%input.form-control{ :type => 'text', :name => "settings[#{category}][#{setting.key}]", 
-									:value => setting.value }
+									:value => setting.value, :placeholder => setting.defaultValue }
 							%td
 								%button.btn.btn-default{ :type => 'button', :data => { :container => 'body', :toggle => 'popover', :placement => 'left', :content => setting.HelpText } } ?
 		%button.btn.btn-primary{ :type => 'submit' } Update

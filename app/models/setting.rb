@@ -4,7 +4,7 @@ class Setting < ActiveRecord::Base
 	def self.getValue category, key
 		if ActiveRecord::Base.connection.table_exists? 'settings' then
 			handle = Setting.where(:category => category, :key => key).first
-			return handle.nil? ? nil : handle.value
+			return handle.value.nil? ? handle.defaultValue : handle.value
 		else
 			nil
 		end

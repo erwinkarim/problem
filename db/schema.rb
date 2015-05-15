@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150514034215) do
+ActiveRecord::Schema.define(version: 20150515045121) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "samaccountname"
@@ -92,9 +92,10 @@ ActiveRecord::Schema.define(version: 20150514034215) do
     t.string   "category"
     t.string   "key"
     t.string   "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "HelpText"
+    t.string   "defaultValue"
   end
 
   create_table "users", force: :cascade do |t|

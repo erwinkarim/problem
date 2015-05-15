@@ -7,8 +7,9 @@
 			- @issue.issue_extra_infos.each do |extra_info|
 				= render :template => 'issue_extra_infos/form.template', 
 					:locals => { :random_id => extra_info.id, :extra_info => extra_info }
-	.form-group
-		%button#extra-detail-btn.btn.btn-success{ :type => 'button' }
-			%i.fa.fa-plus
-			Add Details
+	- if IssueExtraInfoDetail.all.count > 0 then
+		.form-group
+			%button#extra-detail-btn.btn.btn-success{ :type => 'button' }
+				%i.fa.fa-plus
+				Add Details
 	%button.btn.btn-primary{ :type => 'submit'} Report

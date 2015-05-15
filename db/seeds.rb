@@ -21,9 +21,6 @@ IssueStatus.create([
 ])
 
 Setting.create([
-	{ category: 'site', key: 'brand', HelpText: 'Your Brand, recommended single word like Problem?' },
-	{ category: 'site', key: 'title', HelpText: 'The text will appear at the top' },
-	{ category: 'email', key: 'network_host', HelpText: 'The hostname to use when doing linking at email' },
-	{ category: 'email', key: 'network_port', HelpText: 'The port to use when doing linking at email' },
-	{ category: 'email', key: 'reply_address', HelpText: 'The reply address when Problem? sending out emails' }
+	{ category: 'site', key: 'brand', HelpText: 'Your Brand, recommended single word like Problem?', defaultValue: 'Problem?' },
+	{ category: 'site', key: 'title', HelpText: 'The text will appear at the top', defaultValue: 'Problem?' }
 ])
