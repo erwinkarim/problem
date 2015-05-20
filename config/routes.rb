@@ -6,6 +6,9 @@ Rails.application.routes.draw do
 	#resources :users, :only => [:index, :show], :constraints => { :id => /[^\/]+/ } do
 	resources :users, :only => [:index, :show] do
 		get 'settings'
+		collection do
+			get 'search'
+		end
 		resources :issues, :only => [:show, :create, :new,:update, :edit] do
 			collection do
 				get '/' => 'issues#user_issues'

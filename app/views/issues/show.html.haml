@@ -15,13 +15,14 @@
 .row
 	%h1.page-header 
 		Issue 
-		%small by #{@user.name}
+		%small concering #{@issue.affected_user.nil? ? @user.name : @issue.affected_user.name }
 .row
 	.col-xs-12.col-md-8
 		%h4.page-header Description
 		= simple_format @issue.description, :class => 'lead'
 	.col-xs-12.col-md-4
 		%h4.page-header Issue Tracker
+		%p Reported by: #{ @issue.user.name }
 		%p Assignee: #{ @issue.assignee.nil? ? 'None' : @issue.assignee.name }  
 		%p Current Status: #{ @issue_trackers.last.new_status.name }
 		%table.table.table-bordered.table-striped

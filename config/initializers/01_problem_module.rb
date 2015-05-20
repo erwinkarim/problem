@@ -1,3 +1,5 @@
+require "#{Rails.root}/lib/stored_ldap.rb"
+
 module Problem
   REVISION = `git describe --always`
 	

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150515045121) do
+ActiveRecord::Schema.define(version: 20150520034340) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "samaccountname"
@@ -80,11 +80,13 @@ ActiveRecord::Schema.define(version: 20150515045121) do
   create_table "issues", force: :cascade do |t|
     t.text     "description"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "assignee_id"
+    t.integer  "affected_user_id"
   end
 
+  add_index "issues", ["affected_user_id"], name: "index_issues_on_affected_user_id"
   add_index "issues", ["assignee_id"], name: "index_issues_on_assignee_id"
   add_index "issues", ["user_id"], name: "index_issues_on_user_id"
 

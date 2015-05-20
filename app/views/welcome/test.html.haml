@@ -1,5 +1,6 @@
 .row
 	.col-xs-12
 		%h1.page-header Test
-	.col-xs-12
-		%input.form-control{:type => "text", :placeholder => 'type name here...'}
+	.col-xs-6
+		%input#search-user.form-control{:type => "text", :placeholder => 'type name here...', 
+			:name => 'query', :data => { :provide => 'typeahead' , :delay => 500  } }

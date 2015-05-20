@@ -11,8 +11,10 @@ module Devise
 					ldap.port = 636
 					ldap.base = ENV['devise_ldap_base']
 					ldap.encryption :simple_tls
-					#ldap.auth "#{login}@#{params[:user][:domain]}", password
+					ldap.auth "#{login}@#{params[:user][:domain]}", password
 					ldap.auth "#{params[:user][:username]}@#{params[:user][:domain]}", password
+					session[:ldapConn] = StoredLDAP.new_connection "#{params[:user][:username]}@#{params[:user][:domain]}", password
+					session[:password] = password
 
 					valid_login = false
 					in_group = false

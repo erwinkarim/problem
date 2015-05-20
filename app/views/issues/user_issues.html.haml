@@ -2,7 +2,7 @@
 	.col-xs-12
 		%h1.page-header
 			Issues
-			%small by #{ @user.name }
+			%small concerning #{ @user.name }
 	.col-xs-12
 		- if @issues.empty? then
 			%p.lead You have no Issues

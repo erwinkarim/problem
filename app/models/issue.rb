@@ -1,6 +1,7 @@
 class Issue < ActiveRecord::Base
   belongs_to :user
 	belongs_to :assignee, :class_name => 'User'
+	belongs_to :affected_user, :class_name => 'User'
 	validates_presence_of :description
 
 	has_many :issue_trackers

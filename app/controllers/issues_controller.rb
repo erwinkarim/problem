@@ -22,8 +22,10 @@ class IssuesController < ApplicationController
 
 	#  POST   /users/:user_id/issues(.:format)
 	def create
+		#check for user affected_user parameter
 		@issue = User.find_by_id(params[:user_id]).issues.new(issue_params)
 
+		
 		if @issue.save! then
 			@issue.issue_trackers.new({:new_status_id => IssueStatus.find_by_name('Open').id, 
 				:user_id => params[:user_id], :comment => 'Issue Created by Reporter'}).save!
@@ -147,7 +149,11 @@ class IssuesController < ApplicationController
 	#  GET    /users/:user_id/issues
 	def user_issues
 		@user = User.find_by_id(params[:user_id]) or not_found
-		@issues = @user.issues.order(:created_at => :desc)
+		t = Issue.arel_table
+		@issues = Issue.where(
+			(t[:user_id].eq(@user.id)).or(t[:affected_user_id].eq(@user.id))
+		)
+		#@issues = @user.issues.order(:created_at => :desc)
 
 		respond_to do |format|
 			format.html
