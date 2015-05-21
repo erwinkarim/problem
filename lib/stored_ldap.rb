@@ -34,6 +34,11 @@ module StoredLDAP
 
 		return ldap.search(
 			:base => ENV['devise_ldap_base'], :filter => displayname & mustperson
-		).map{ |x| { :displayname => x[:displayname], :samaccountname => x[:samaccountname], :mail => x[:mail]} }.flatten
+		).map{ |x| 
+			{ 
+				:displayname => x[:displayname], :samaccountname => x[:samaccountname], 
+				:mail => (x[:mail].empty? ? x[:userprincipalname].map{|x| x.downcase } : x[:mail])
+			} 
+		}.flatten
 	end
 end

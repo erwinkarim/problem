@@ -21,8 +21,22 @@ class User < ActiveRecord::Base
 		user = User.find_by_name displayname
 		if user.nil? then
 			#check from ldap
-			ldap = StoredLDAP.query(username, password, displayname)
+			result = StoredLDAP.query(username, password, displayname).first
 			
+			if result.nil? then
+				return nil
+			else
+				#user exists in AD. find local user or else, build the user
+
+				user = User.find_by_email(result[:mail].first)
+				if user.nil? then
+					password = SecureRandom.hex
+					user = User.new(:name => result[:displayname].first, 
+						:username => result[:samaccountname].first, 	
+						:email => result[:mail].first, :password => password, :password_confirmation => password).save!
+				end
+				return user
+			end	
 			
 		else
 			return user

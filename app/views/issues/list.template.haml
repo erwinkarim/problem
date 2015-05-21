@@ -5,7 +5,7 @@
 			%th.col-xs-1{ :'data-defaultsort' => 'desc' } ID
 			%th.col-xs-5 Description
 			%th.col-xs-1 Opened
-			%th.col-xs-2 Reporter By
+			%th.col-xs-2 Affecting
 			%th.col-xs-2 Assignee
 			%th.col-xs-1 Status
 	%tbody
@@ -15,6 +15,6 @@
 					%a{ :href => issue_path(issue.id) } #{ issue.id }
 				%td #{ issue.description.split("\n")[0] }
 				%td #{ issue.created_at.localtime }
-				%td #{ User.find_by_id(issue.user_id).name }
+				%td #{ issue.affected_user.nil? ? issue.user.name : issue.affected_user.name }
 				%td #{ issue.assignee_id.nil? ? 'None' : User.find_by_id(issue.assignee_id).name }
 				%td #{ issue.issue_trackers.order(:created_at => :desc).first.new_status.name }

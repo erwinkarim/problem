@@ -3,7 +3,9 @@
 		.form-gorup
 			%label
 				Affected User:
-			%input#affected-user.form-control{ :type => 'text', :name => 'affected_user', :placeholder => "#{current_user.name} or type name" }
+			%input#affected-user.form-control{ :type => 'text', :name => 'affected_user', 
+				:placeholder => "#{current_user.name} or type name", 
+				:value => @issue.affected_user.nil? ? "" : @issue.affected_user.name }
 			%input#affected-user-mail{:type => 'hidden', :name => 'affected_user_email' }
 	.form-group
 		= f.label :description	
