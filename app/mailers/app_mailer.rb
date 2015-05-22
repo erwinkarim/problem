@@ -11,8 +11,13 @@ class AppMailer < ApplicationMailer
 		@user = User.find_by_id(issue.user_id)
 		@issue = issue
 
+		mailing_list = [ issue.user.email ]
+		if !issue.affected_user.nil? && (issue.affected_user_id != issue.user_id) then
+			mailing_list << issue.affected_user.email
+		end
+
 		mail(
-			:to => @user.email,
+			:to => mailing_list,
 			:subject => "#{Setting.getValue('site', 'brand') }: Issue #{ @issue.id } created"
 		)
 	end
@@ -22,8 +27,13 @@ class AppMailer < ApplicationMailer
 		@issue = issue
 		@latest_tracker = issue.issue_trackers.last
 		
+		mailing_list = [ issue.user.email ]
+		if !issue.affected_user.nil? && (issue.affected_user_id != issue.user_id) then
+			mailing_list << issue.affected_user.email
+		end
+
 		mail(
-			:to => @user.email, 
+			:to => mailing_list,
 			:subject => "#{Setting.getValue('site', 'brand') }: Status for Issue #{ @issue.id } updated to #{@latest_tracker.new_status.name}"
 		)
 	end
