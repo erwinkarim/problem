@@ -36,3 +36,40 @@ AdminsController.prototype.setup = function(){
 		$('[data-toggle="popover"]').popover();
 	});
 };
+
+
+AdminsController.prototype.reports_show = function(){
+	console.log('loaded admin/reports_show');
+
+	//setup the chart
+	var issueChartOptions = {
+		title: {text:'Issues' },
+		chart: { renderTo: 'issues-chart', type:'column' },
+		series:[],
+		xAxis: { categories:[] }
+	};
+
+
+	var xtraInfoOptions = {
+		title: {text:'Extra Infos' },
+		chart: { renderTo: 'issues-chart', type:'column' },
+		series:[],
+		xAxis: { categories:[] }
+	};
+
+	//get the data from current address
+	$.getJSON(window.location.href, function(data){
+		//load chart data
+		issueChartOptions.xAxis.categories = data.chart1.categories;
+		issueChartOptions.series =  [ 
+			{ name: data.chart1.series[0].name, data: data.chart1.series[0].data },
+			{ name: data.chart1.series[1].name, data: data.chart1.series[1].data },
+			{ name: data.chart1.series[2].name, data: data.chart1.series[2].data }
+		 ];
+
+		//draw the chart
+		var issueChart = new Highcharts.Chart(issueChartOptions);
+
+	});
+
+};

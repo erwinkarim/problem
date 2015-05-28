@@ -39,7 +39,67 @@ class AdminsController < ApplicationController
 
 	# GET /admins/report
 	# show report on  admin's performance
-	def report
+	def reports
+		@admins = Admin.all
+	end
+
+	#  GET    /admins/reports/:id
+	def reports_show
+		@admin =  Admin.find_by_id(params[:id])
+
+		respond_to do |format|
+			format.html
+			format.json {
+				#return data for the charts
+				#format
+				# { :chart1 => 
+				# 	{ :categories => [x1,x2,... xn], :series => [ { name: name1, data:[d1_1, d1_2, xxx, d1_n] }, { .. } ] } ,
+				# 	:chart2 => 
+				# 	{ :categories => ... }
+				# }
+				if @admin.nil? then
+					render :nothing => true
+				end
+				user = User.find_by_username @admin.samaccountname
+
+				# gather issue performance data
+				categories = ((Date.today-180)..Date.today).map{ |d| ["#{d.year}-#{d.month}"] }.uniq.map{ |x| x.first }
+				opened_issues = user.issues.group_by_month.map{ |key,value| [Date.parse(key).strftime('%Y-%-m'), value] }
+				opened_issues = categories.map do |x| 
+					selected = opened_issues.select{ |y| y.first == x }.first	
+					selected.nil? ? [x, 0] :  [x, selected[1] ]
+				end
+				assigned_issues = IssueTracker.where(
+					:user_id => user.id , :new_status_id => IssueStatus.find_by_name('Assigned').id).group_by_month.map{ 
+						|key,value| [Date.parse(key).strftime('%Y-%-m'), value] 
+					}
+				assigned_issues = categories.map do |x| 
+					selected = assigned_issues.select{ |y| y.first == x }.first	
+					selected.nil? ? [x, 0] :  [x, selected[1] ]
+				end
+				closed_issues = IssueTracker.where(
+					:user_id => user.id , :new_status_id => IssueStatus.find_by_name('Closed').id).group_by_month.map{ 
+						|key,value| [Date.parse(key).strftime('%Y-%-m'), value] 
+					}
+				closed_issues = categories.map do |x| 
+					selected = closed_issues.select{ |y| y.first == x }.first	
+					selected.nil? ? [x, 0] :  [x, selected[1] ]
+				end
+				 
+
+				#gather IssueExtraInfo performance data
+				render :json => { 
+					:chart1 =>  { 
+						:categories => categories,
+						:series => [ 
+							{ :name => 'Opened', :data => opened_issues },
+							{ :name => 'Assigned', :data => assigned_issues },
+							{ :name => 'Closed', :data => closed_issues }
+						]
+					}
+				 }
+			}
+		end #respond_to
 	end
 
 	# GET    /admins/setup

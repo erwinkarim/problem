@@ -1,0 +1,6 @@
+.row
+	.col-xs-12
+		%h1.page-header Admin's Report
+		- @admins.each do |admin|
+			%p 
+				%a{ :href => show_reports_admins_path(admin.id) } #{admin.samaccountname }

@@ -1,4 +1,5 @@
 class Admin < ActiveRecord::Base
+	belongs_to :user
 	validates :samaccountname, :presence => true, :uniqueness => true 
 
 	def self.search

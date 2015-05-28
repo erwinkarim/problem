@@ -42,7 +42,8 @@ Rails.application.routes.draw do
 			get 'setup'
 			post 'setup' => 'admins#update_setup'
 			get 'search'
-			get 'report'
+			get 'reports'
+			get 'reports/:id' => 'admins#reports_show', :as => 'show_reports'
 		end
 	end
 
