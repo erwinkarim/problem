@@ -85,7 +85,14 @@ class AdminsController < ApplicationController
 					selected = closed_issues.select{ |y| y.first == x }.first	
 					selected.nil? ? [x, 0] :  [x, selected[1] ]
 				end
-				 
+			
+				extra_info = IssueExtraInfo.where(:issue_id => Issue.where(:user_id => user.id).pluck(:id) ).group_by_month.map{
+						|key,value| [ Date.parse(key).strftime('%Y-%-m'), value ]
+					}
+				extra_info = categories.map do |x| 
+					selected = extra_info.select{ |y| y.first == x }.first	
+					selected.nil? ? [x, 0] :  [x, selected[1] ]
+				end
 
 				#gather IssueExtraInfo performance data
 				render :json => { 
@@ -95,6 +102,12 @@ class AdminsController < ApplicationController
 							{ :name => 'Opened', :data => opened_issues },
 							{ :name => 'Assigned', :data => assigned_issues },
 							{ :name => 'Closed', :data => closed_issues }
+						]
+					},
+					:chart2 => {
+						:categories => categories,
+						:series => [
+							{ :name => 'Count', :data => extra_info }
 						]
 					}
 				 }

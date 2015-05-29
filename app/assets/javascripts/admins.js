@@ -52,7 +52,7 @@ AdminsController.prototype.reports_show = function(){
 
 	var xtraInfoOptions = {
 		title: {text:'Extra Infos' },
-		chart: { renderTo: 'issues-chart', type:'column' },
+		chart: { renderTo: 'xtra-info-chart', type:'column' },
 		series:[],
 		xAxis: { categories:[] }
 	};
@@ -67,9 +67,15 @@ AdminsController.prototype.reports_show = function(){
 			{ name: data.chart1.series[2].name, data: data.chart1.series[2].data }
 		 ];
 
-		//draw the chart
+		//draw the issue chart
 		var issueChart = new Highcharts.Chart(issueChartOptions);
 
+		xtraInfoOptions.xAxis.categories = data.chart2.caissueChartOptionstegories;
+		xtraInfoOptions.series = [
+			{ name: data.chart2.series[0].name, data: data.chart2.series[0].data }
+		];
+
+		var xtraInfoChart = new Highcharts.Chart(xtraInfoOptions);	
 	});
 
 };
