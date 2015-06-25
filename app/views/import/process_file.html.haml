@@ -1,0 +1,10 @@
+.row
+	.col-xs-12
+		%h1.page-header Processing the file...
+.row
+	.col-xs-12
+		#process-window
+		- @end_result.each do |line|
+			%p #{line.inspect }
+	
+	

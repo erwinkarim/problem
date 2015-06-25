@@ -1,0 +1,17 @@
+- require 'csv'
+%table.table.table-bordered
+	%thead
+		%tr
+			- index = -1
+			- CSV.parse(@file.each_line.first).first.each do |dataPoint|
+				%th.draggable 
+					%a.btn.btn-default{ :href => '#', :'ref-index' => (index += 1).to_s  } #{dataPoint}
+					
+	%tbody
+		- current_line = 0
+		- File.foreach(@file.path).first(11).each do |line|
+			- current_line += 1
+			- if current_line != 1 then
+				%tr
+					- CSV.parse(line).first.each do |dataPoint|
+						%td #{dataPoint}

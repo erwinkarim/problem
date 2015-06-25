@@ -212,6 +212,7 @@ class IssuesController < ApplicationController
 		end
 	end
 
+
 	private
 	
 	def issue_params

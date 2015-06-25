@@ -25,6 +25,13 @@ Rails.application.routes.draw do
 		end
 		collection do
 			post 'search'
+			resources :import, :only => [:index] do
+				collection do
+					get 'preview'
+					post 'drop_file' 
+					post 'process_file'
+				end
+			end
 		end
 	end
 

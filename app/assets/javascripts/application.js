@@ -11,11 +11,14 @@
 // about supported directives.
 //
 //= require jquery
-//=/require jquery.turbolinks
+//= require jquery-ui
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require paloma
 //= require turbolinks
+//= require jquery-fileupload/basic
 //= require_tree .
+
 $(document).on('page:change', function(){
 	$.bootstrapSortable();
 });

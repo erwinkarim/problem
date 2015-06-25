@@ -1,0 +1,53 @@
+.row
+	.col-xs-12
+		.page-header
+			%h1 Import Issues
+.row#step1
+	.col-xs-12
+		%h2.page-header 1. Load the CSV...
+		%p drop file here
+		= form_tag drop_file_import_index_path , :method => :post do
+			%span.btn.btn-default.fileinput-button
+				%span choose a file
+				%input#drop-file{ :type => 'file', :name => 'import-file-field' }
+			#drop-zone
+.row#step2.hide
+	.col-xs-12
+		%h2.page-header 
+			2. Drag the title and drop into the appropriate boxes
+			%small All fields are mandatory
+		%table#select-header-table.table.table-boardered
+			%thead
+				%tr
+					%th.col-xs-3 Detail
+					%th.col-xs-3 Selected
+			%tbody
+				%tr
+					%th Open Date
+					%td.droppable Drop Here
+				%tr
+					%th Assigned Date
+					%td.droppable Drop Here
+				%tr
+					%th Closed Date
+					%td.droppable Drop Here
+				%tr
+					%th Affected Users (name or email)
+					%td.droppable Drop Here
+				%tr
+					%th Description
+					%td.droppable Drop Here
+					
+
+.row#step3.hide
+	.col-xs-12
+		%h2.page-header 3. Click Import!
+		= form_tag process_file_import_index_path, :method => :post, :id => 'process-import-form' do
+			%input#target{ :type => 'hidden', :name => 'target' }
+			%input#fire-order{ :type => 'hidden', :name => 'fire-order' }
+			%button#start-import-btn.btn.btn-primary{ :type => 'button' } Import!
+.row#csv-content.hide
+	.col-xs-12
+		%h2 CSV Content
+		#file-contents{ :style => 'white-space: pre;' }
+
