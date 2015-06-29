@@ -24,7 +24,7 @@ class Issue < ActiveRecord::Base
 	# 		Closed
 	# 			-> auto close after 2 weeks on the issue being resolved
 	# 		Reopened
-	# 			-> next option is assigned	
+	# 			-> next option is assigned
 	#
 	# 	Between Open and Closed, these status can be added at any time
 	# 	Edit Description
@@ -33,7 +33,7 @@ class Issue < ActiveRecord::Base
 
 		#get current status w/o comments and description edits
 		current_status = self.issue_trackers.where.not(
-			:new_status_id => IssueStatus.where(:name => ['Description Modified', 'Additional Comments'] ).pluck(:id) 
+			:new_status_id => IssueStatus.where(:name => ['Description Modified', 'Additional Comments'] ).pluck(:id)
 		).order(:created_at => :desc).first.new_status.name
 
 		if (current_status == 'Open') then

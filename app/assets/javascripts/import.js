@@ -9,6 +9,12 @@ ImportController.prototype.index = function(){
 			$(this).empty().append($(ui.draggable[0]).find('a').clone() );
 			//if all the field has been selected, show import button
 			$('#step3').removeClass('hide');
+
+			//check if the all the fields has been selected, then 
+			$(this).removeClass('not-set');
+			if( $('#select-header-table').find('.not-set').length == 0 ) {
+				$('#start-import-btn').removeAttr('disabled');
+			};
 		}
 	});
 

@@ -5,14 +5,14 @@ class IssuesController < ApplicationController
 		end
 
 		#get open issues
-		@issues = Issue.where( :id => 
+		@issues = Issue.where( :id =>
 			IssueTracker.group(:issue_id).having(
-				'max(created_at) and new_status_id not in (?)', 
+				'max(created_at) and new_status_id not in (?)',
 				IssueStatus.where(:name => ['Resolved', 'Closed']).pluck(:id)
 			).pluck(:issue_id)
 		).order(:created_at => :desc)
 	end
-	
+
 	#  GET    /users/:user_id/issues/new
 	def new
 		@user = User.find_by_id(params[:user_id])
@@ -33,13 +33,13 @@ class IssuesController < ApplicationController
 			Rails.logger.info "check affected user by email"
 			affected_user = User.find_by_email(params[:affected_user_email])
 			#look in ActiveDirectory
-			if affected_user.nil? then 
+			if affected_user.nil? then
 				Rails.logger.info "check affected user by displayname"
 				affected_user = User.find_by_displayname(
-					params[:affected_user], "#{current_user.username}@#{current_user.domain}" , session[:password] 
+					params[:affected_user], "#{current_user.username}@#{current_user.domain}" , session[:password]
 				)
 				#really can't find it, raise error
-				Rails.logger.info "affected_user.nil? => #{affected_user.nil? }" 
+				Rails.logger.info "affected_user.nil? => #{affected_user.nil? }"
 				if affected_user.nil? then
 					Rails.logger.info "suppose to redirect to new_user_issue_path"
 					flash[:error] = "Affected User #{params[:affected_user] } not found"
@@ -67,7 +67,7 @@ class IssuesController < ApplicationController
 						:string_val => extra_info[1]["input"] ).save!
 				end
 			end
-				
+
 			#send issue creation email
 			AppMailer.new_issue(@issue).deliver_later
 			flash[:success] = "Issue #{@issue.id} created"
@@ -112,9 +112,9 @@ class IssuesController < ApplicationController
 			#can't find the guy, search through db then active directory
 			Rails.logger.info "looking for affected user is #{params[:affected_user]}"
 			affected_user = User.find_by_email(params[:affected_user_email])
-			if affected_user.nil? then 
+			if affected_user.nil? then
 				affected_user = User.find_by_displayname(
-					params[:affected_user], "#{current_user.username}@#{current_user.domain}" , session[:password] 
+					params[:affected_user], "#{current_user.username}@#{current_user.domain}" , session[:password]
 				)
 				if affected_user.nil? then
 					#can't find the user
@@ -129,7 +129,7 @@ class IssuesController < ApplicationController
 
 		if @issue.update_attributes(issue_params) then
 			#purne extra_info list (drop extra_info that is not in the list)
-			#find extra_info ids that is not in the new list and delete them	
+			#find extra_info ids that is not in the new list and delete them
 			if params.has_key? :extra_info then
 				@issue.issue_extra_infos.where.not(:id => params[:extra_info].collect{ |x| x[0] } ).destroy_all
 			else
@@ -142,11 +142,11 @@ class IssuesController < ApplicationController
 				params[:extra_info].each do |extra_info|
 					issue_extra_info = IssueExtraInfo.find_by_id extra_info[0]
 					if issue_extra_info.nil? then
-						issue_extra_info = @issue.issue_extra_infos.new( 
+						issue_extra_info = @issue.issue_extra_infos.new(
 							:extra_info_detail_id => extra_info[1][:detail_id], :string_val => extra_info[1][:input]
 						)
 					else
-						issue_extra_info.assign_attributes( 
+						issue_extra_info.assign_attributes(
 							:extra_info_detail_id => extra_info[1][:detail_id], :string_val => extra_info[1][:input]
 						)
 					end
@@ -155,14 +155,14 @@ class IssuesController < ApplicationController
 			end
 
 			@issue.issue_trackers.new(
-				:new_status_id => IssueStatus.find_by_name('Description Modified').id, 
+				:new_status_id => IssueStatus.find_by_name('Description Modified').id,
 				:user_id => current_user.id,
 				:comment => 'Reporter Update Issue Description'
 			).save!
 			flash[:sucess] = "Issue #{@issue.id} updated"
 			redirect_to user_issue_path(@user,@issue)
 		else
-			flash[:alert] = 'Error is updating issue: ' + @issue.errors.full_messages.join(';') 
+			flash[:alert] = 'Error is updating issue: ' + @issue.errors.full_messages.join(';')
 			redirect_to edit_user_issue_path(@user, @issue)
 		end
 	end
@@ -172,7 +172,7 @@ class IssuesController < ApplicationController
 		users_id = []
 		issues_id = []
 
-		params[:query].split(" ").each do | pattern | 
+		params[:query].split(" ").each do | pattern |
 			#get users w/ the pattern
 			users_id.push( User.where('name like ?', "%#{pattern}%").pluck(:id) )
 
@@ -191,13 +191,13 @@ class IssuesController < ApplicationController
 
 		#now return the issues from a list of issue ids
 		@issues = Issue.where(:id => issues_id.flatten.uniq).order(:created_at => :desc)
-		
+
 		respond_to do |format|
 			format.html
 		end
 
 	end
-	
+
 	#  GET    /users/:user_id/issues
 	def user_issues
 		@user = User.find_by_id(params[:user_id]) or not_found
@@ -214,8 +214,8 @@ class IssuesController < ApplicationController
 
 
 	private
-	
+
 	def issue_params
-		params.require(:issue).permit(:description, :affected_user_id)
+		params.require(:issue).permit(:description, :affected_user_id, :created_at)
 	end
 end

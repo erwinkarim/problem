@@ -27,6 +27,6 @@ class IssueTrackersController < ApplicationController
 
 	private
 	def params_issue_tracker
-		params.require(:issue_tracker).permit(:new_status_id, :comment, :user_id )
+		params.require(:issue_tracker).permit(:created_at, :new_status_id, :comment, :user_id )
 	end
 end

@@ -13,7 +13,7 @@
 			#drop-zone
 .row#step2.hide
 	.col-xs-12
-		%h2.page-header 
+		%h2.page-header
 			2. Drag the title and drop into the appropriate boxes
 			%small All fields are mandatory
 		%table#select-header-table.table.table-boardered
@@ -24,30 +24,34 @@
 			%tbody
 				%tr
 					%th Open Date
-					%td.droppable Drop Here
+					%td.droppable.not-set Drop Here
 				%tr
 					%th Assigned Date
-					%td.droppable Drop Here
+					%td.droppable.not-set Drop Here
 				%tr
 					%th Closed Date
-					%td.droppable Drop Here
+					%td.droppable.not-set Drop Here
 				%tr
-					%th Affected Users (name or email)
-					%td.droppable Drop Here
+					%th Affected Users (email)
+					%td.droppable.not-set Drop Here
 				%tr
 					%th Description
-					%td.droppable Drop Here
-					
-
+					%td.droppable.not-set Drop Here
 .row#step3.hide
 	.col-xs-12
 		%h2.page-header 3. Click Import!
-		= form_tag process_file_import_index_path, :method => :post, :id => 'process-import-form' do
+		= form_tag process_file_import_index_path, :method => :post, :class => 'form-horizontal', :id => 'process-import-form' do
+			.form-group
+				%label.control-label.col-sm-2 Date Format
+				.col-sm-10
+					%select.form-control.col-sm-10{ :name => 'date-format'}
+						- current_index = -1
+						- ImportHelper.supported_date_formats.each do |date_format|
+							%option{ :value => current_index += 1 } #{date_format}
 			%input#target{ :type => 'hidden', :name => 'target' }
 			%input#fire-order{ :type => 'hidden', :name => 'fire-order' }
-			%button#start-import-btn.btn.btn-primary{ :type => 'button' } Import!
+			%button#start-import-btn.btn.btn-primary{ :type => 'button', :disabled => true } Import!
 .row#csv-content.hide
 	.col-xs-12
 		%h2 CSV Content
-		#file-contents{ :style => 'white-space: pre;' }
-
+		#file-contents
