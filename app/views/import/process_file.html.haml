@@ -1,10 +1,20 @@
 .row
 	.col-xs-12
-		%h1.page-header Processing the file...
+		%h1.page-header File Processed
 .row
 	.col-xs-12
 		#process-window
-		- @end_result.each do |line|
-			%p #{line.inspect }
-	
-	
+			%table.table
+				%theader
+					%tr
+						%th ID
+						%th Description
+				%tbody
+					- @end_result.each do |line|
+						%tr
+							- if line[1] == true then
+								%td #{link_to line[0].id, issue_path(line[0].id) }
+								%td #{line[0].description}
+							- else
+								%td "Nil"
+								%td "Data Invalid"

@@ -10,7 +10,7 @@ ImportController.prototype.index = function(){
 			//if all the field has been selected, show import button
 			$('#step3').removeClass('hide');
 
-			//check if the all the fields has been selected, then 
+			//check if the all the fields has been selected, then
 			$(this).removeClass('not-set');
 			if( $('#select-header-table').find('.not-set').length == 0 ) {
 				$('#start-import-btn').removeAttr('disabled');
@@ -26,7 +26,7 @@ ImportController.prototype.index = function(){
 
 		//reset the tables
 		$('#select-header-table').find('.droppable').empty().append('Drop Here');
-		
+
 		//display step2 and preview
 		$('#csv-content').removeClass('hide');
 		$('#step2').removeClass('hide');
