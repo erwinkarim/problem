@@ -3,11 +3,11 @@ var AdminsController = Paloma.controller('Admins');
 
 AdminsController.prototype.index = function(){
 	console.log('loaded admin/index');
-	
+
 	var remove_admin = function(target){
 			$(target).click( function(){
-				$.ajax('/admins/' + $(this).attr('data-id') , 
-					{ method:'DELETE' }
+				$.ajax('/admins/' + $(this).attr('data-id') ,
+					{ method:'DELETE', data: $(this).closest('form').serialize() }
 				).done( function(data){
 					$(target).closest('tr').remove();
 				}).fail( function(data){
@@ -22,7 +22,7 @@ AdminsController.prototype.index = function(){
 		});
 
 		$('#new-admin-button').click( function(){
-			$.post('/admins', { username:$('#new-admin').val() }, function(data){
+			$.post('/admins', $('#new-admin-form').serialize() ,function(data){
 				$('#admin-list').find('#no-one-is-here').remove();
 				$('#admin-list').append(data);
 			});
@@ -61,7 +61,7 @@ AdminsController.prototype.reports_show = function(){
 	$.getJSON(window.location.href, function(data){
 		//load chart data
 		issueChartOptions.xAxis.categories = data.chart1.categories;
-		issueChartOptions.series =  [ 
+		issueChartOptions.series =  [
 			{ name: data.chart1.series[0].name, data: data.chart1.series[0].data },
 			{ name: data.chart1.series[1].name, data: data.chart1.series[1].data },
 			{ name: data.chart1.series[2].name, data: data.chart1.series[2].data }
@@ -75,7 +75,7 @@ AdminsController.prototype.reports_show = function(){
 			{ name: data.chart2.series[0].name, data: data.chart2.series[0].data }
 		];
 
-		var xtraInfoChart = new Highcharts.Chart(xtraInfoOptions);	
+		var xtraInfoChart = new Highcharts.Chart(xtraInfoOptions);
 	});
 
 };

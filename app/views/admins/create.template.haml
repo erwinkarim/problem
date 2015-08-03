@@ -2,5 +2,6 @@
 	%td #{ @user.samaccountname }
 	%td #{ @user.created_at.localtime }
 	%td
-		%button.remove-user.btn.btn-danger{ :type => 'button', :data => { :id => @user.id }  }
-			%i.fa.fa-minus
+		= form_tag nil, :method => :delete do
+			%button.remove-user.btn.btn-danger{ :type => 'button', :data => { :id => @user.id }  }
+				%i.fa.fa-minus

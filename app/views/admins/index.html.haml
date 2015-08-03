@@ -19,8 +19,9 @@
 					- @admins.each do |admin|
 						= render :template => 'admins/create.template', :locals => { :'@user' => admin }
 	.col-xs-6
-		%form.form-horizontal#new-admin-form
+		= form_tag admins_path, { :class => 'form-horizontal', :id => 'new-admin-form'} do
 			.form-group
+				%input.hide{ :type => 'text'}
 				%input.form-control#new-admin{ :type => 'text', :name => 'username', :placeholder => 'Type username'}
 			.form-group
 				%button.btn.btn-primary#new-admin-button{ :type => 'button' } Add
