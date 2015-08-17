@@ -1,19 +1,22 @@
 = form_for @issue, { :url => @target_url } do |f|
 	- if current_user.admin? then
+		.form-group
+			%label
+				Tags Test
+			%select#tags-test.form-control{ :multiple => hrue, :name => 'tagstest' }
 		.form-gorup
 			%label
 				Affected User:
-			%input#affected-user.form-control{ :type => 'text', :name => 'affected_user', 
-				:placeholder => "#{current_user.name} or type name", 
+			%input#affected-user.form-control{ :type => 'text', :name => 'affected_user',
 				:value => @issue.affected_user.nil? ? "" : @issue.affected_user.name }
 			%input#affected-user-mail{:type => 'hidden', :name => 'affected_user_email' }
 	.form-group
-		= f.label :description	
+		= f.label :description
 		= f.text_area :description, { :rows => 15 , :class => 'form-control', :placeholder => 'Describe your issue here' }
 	#extra-info-list
 		- unless @issue.issue_extra_infos.nil? then
 			- @issue.issue_extra_infos.each do |extra_info|
-				= render :template => 'issue_extra_infos/form.template', 
+				= render :template => 'issue_extra_infos/form.template',
 					:locals => { :random_id => extra_info.id, :extra_info => extra_info }
 	- if IssueExtraInfoDetail.all.count > 0 then
 		.form-group
