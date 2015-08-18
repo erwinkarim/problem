@@ -1,10 +1,10 @@
 class AppMailer < ApplicationMailer
 
-	default from: ENV['email_reply_address']
+	default from: "#{ENV['site_brand']} <#{ENV['email_reply_address']}>"
 
 	def test(user)
 		@user = user
-		mail(:to => user.email, :subject => "#{Setting.getValue('site', 'brand') }: Test") 
+		mail(:to => user.email, :subject => "#{Setting.getValue('site', 'brand') }: Test")
 	end
 
 	def new_issue(issue)
@@ -26,7 +26,7 @@ class AppMailer < ApplicationMailer
 		@user = User.find_by_id(issue.user_id)
 		@issue = issue
 		@latest_tracker = issue.issue_trackers.last
-		
+
 		mailing_list = [ issue.user.email ]
 		if !issue.affected_user.nil? && (issue.affected_user_id != issue.user_id) then
 			mailing_list << issue.affected_user.email

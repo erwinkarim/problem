@@ -27,22 +27,33 @@ var newEditFunction = function(){
 			remote:{
 				url: '/users/search?query=%QUERY',
 				wildcard:'%QUERY',
-				transform: function(response){
-					return response.options;
-				}
 			},
 			local: ["one", "two", "three"]
 		});
 
 		usernames.initialize();
 
-		$('#tags-test').tagsinput({
-				typeaheadjs:[{
-						highlight:true
+		$('#affected-user').tagsinput({
+			itemValue:'displayname',
+			itemText:'displayname',
+			typeaheadjs:[{
+					highlight:true
 				},{
+					display: function(suggestion){
+						return suggestion.displayname + " <" + suggestion.mail + ">";
+					},
 					source:usernames.ttAdapter()
-				}],
-				freeInput: false
+				}
+			],
+			freeInput: false
+		});
+
+		$('#affected-user').on('itemAdded', function(event){
+			$('#affected-user-mail').append(
+				$('<option></option>').attr('value', event.item.mail).attr('selected', 'selected').text(event.item.mail)
+			);
+		}).on('itemRemoved', function(event){
+			$('#affected-user-mail').find('option[value="'+ event.item.mail +'"]').remove();
 		});
 
 		/*

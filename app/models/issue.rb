@@ -4,8 +4,8 @@ class Issue < ActiveRecord::Base
 	belongs_to :affected_user, :class_name => 'User'
 	validates_presence_of :description
 
-	has_many :issue_trackers
-	has_many :issue_extra_infos
+	has_many :issue_trackers, :dependent => :destroy
+	has_many :issue_extra_infos, :dependent => :destroy
 
 	#returns possible status w/ the current issue
 	#

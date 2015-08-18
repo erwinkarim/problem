@@ -27,13 +27,15 @@ class UsersController < ApplicationController
 		respond_to do |format|
 			format.json {
 				init_hash = { :options => [], :emails => []}
+				init_array = []
 				if !results.nil? then
 					results[0..10].each do |x|
 						init_hash[:options] << x[:displayname][0]
 						init_hash[:emails] << x[:mail][0]
+						init_array << { :displayname => x[:displayname][0], :mail => x[:mail][0]}
 					end
 				end
-				render :json => init_hash
+				render :json => init_array
 			}
 		end
 	end

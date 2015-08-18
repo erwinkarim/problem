@@ -22,62 +22,60 @@ class IssuesController < ApplicationController
 
 	#  POST   /users/:user_id/issues(.:format)
 	def create
+		#sanity check
+		if params[:issue][:description].empty? then
+			flash[:error] = "Description Can't be Blank"
+			redirect_to :back
+		end
+
+		if params[:affected_user_mails].nil? then
+			params[:affected_user_mails] = [current_user.email]
+		end
+
 		#check for user affected_user parameter
-		user = User.find_by_id(params[:user_id])
-		affected_user = nil
+		#user = User.find_by_id(params[:user_id])
+		issues = Array.new
 
-		if params[:affected_user].empty? then
-			affected_user = User.find_by_id(params[:user_id])
-		else
-			#look in local db
-			Rails.logger.info "check affected user by email"
-			affected_user = User.find_by_email(params[:affected_user_email])
-			#look in ActiveDirectory
+		#build the issues one by one and send out notification email at each one
+		params[:affected_user_mails].uniq.each do |user_mail|
+			#find the user
+			affected_user = User.find_by_email(user_mail)
 			if affected_user.nil? then
-				Rails.logger.info "check affected user by displayname"
-				affected_user = User.find_by_displayname(
-					params[:affected_user], "#{current_user.username}@#{current_user.domain}" , session[:password]
-				)
-				#really can't find it, raise error
-				Rails.logger.info "affected_user.nil? => #{affected_user.nil? }"
-				if affected_user.nil? then
-					Rails.logger.info "suppose to redirect to new_user_issue_path"
-					flash[:error] = "Affected User #{params[:affected_user] } not found"
-					@issue = user.issues.new(issue_params)
-					redirect_to new_user_issue_path(params[:user_id])
-					return
+				affected_user = User.find_by_mail(user_mail, "#{current_user.username}@#{current_user.domain}", session[:password])
+			end
+
+			#since the users are selected from ad in the first place, affected_user must be real
+			#create the issue
+			issue = affected_user.issues.new(
+				:description => params[:issue][:description], :affected_user_id => affected_user.id,
+				:user_id => current_user.id
+			)
+			if issue.valid? then
+				issue.save!
+				issue.issue_trackers.new({:new_status_id => IssueStatus.find_by_name('Open').id,
+					:user_id => params[:user_id], :comment => 'Issue Created by Reporter'}).save!
+				issues << issue
+
+				#generate new status
+
+				#handle extra_info
+				if params.has_key? :extra_info then
+					params[:extra_info].each do |extra_info|
+						issue.issue_extra_infos.new(
+							:extra_info_detail_id => extra_info[1]["detail_id"],
+							:string_val => extra_info[1]["input"] ).save!
+					end
 				end
+
+				#send out email
+				AppMailer.new_issue(issue).deliver_later
 			end
 		end
 
-		#create new issue and validate before saving
-		params[:issue][:affected_user_id] = affected_user.id
-		@issue = user.issues.new(issue_params)
-
-		if @issue.valid? then
-			@issue.save!
-			@issue.issue_trackers.new({:new_status_id => IssueStatus.find_by_name('Open').id,
-				:user_id => params[:user_id], :comment => 'Issue Created by Reporter'}).save!
-
-			#handle extra_info
-			if params.has_key? :extra_info then
-				params[:extra_info].each do |extra_info|
-					@issue.issue_extra_infos.new(
-						:extra_info_detail_id => extra_info[1]["detail_id"],
-						:string_val => extra_info[1]["input"] ).save!
-				end
-			end
-
-			#send issue creation email
-			AppMailer.new_issue(@issue).deliver_later
-			flash[:success] = "Issue #{@issue.id} created"
-			redirect_to user_issue_path(params[:user_id], @issue)
-			return
-		else
-			flash[:alert] = 'Error in saving: ' + @issue.errors.full_messages.join(';')
-			redirect_to new_user_issue_path(params[:user_id])
-			return
-		end
+		#flash and redirect
+		@issue = issues.first
+		flash[:notice] = "Issues #{issues.map{|x| view_context.link_to(x.id, issue_path(x.id), :target => '_blank')}.join(',')} created"
+		redirect_to user_issue_path(params[:user_id], issues.first.id)
 	end
 
 	# GET    /issues/:id(.:format)
@@ -104,28 +102,7 @@ class IssuesController < ApplicationController
 		@user = User.find_by_id(params[:user_id]) or not_found
 		@issue = @user.issues.find_by_id(params[:id]) or not_found
 
-		#cater for changing affected user
-		if params[:affected_user].empty? then
-			affected_user = User.find_by_id(params[:user_id])
-			issue_params[:issue][:affected_user_id] = affected_user.id
-		else
-			#can't find the guy, search through db then active directory
-			Rails.logger.info "looking for affected user is #{params[:affected_user]}"
-			affected_user = User.find_by_email(params[:affected_user_email])
-			if affected_user.nil? then
-				affected_user = User.find_by_displayname(
-					params[:affected_user], "#{current_user.username}@#{current_user.domain}" , session[:password]
-				)
-				if affected_user.nil? then
-					#can't find the user
-					flash[:error] = "Affected User #{params[:affected_user] } not found"
-					redirect_to edit_user_issue_path(params[:user_id], @issue)
-					return
-				end
-			end
-			Rails.logger.info "affected_user: #{affected_user}"
-			params[:issue][:affected_user_id] = affected_user.id
-		end
+		#don't cater for changing affected user
 
 		if @issue.update_attributes(issue_params) then
 			#purne extra_info list (drop extra_info that is not in the list)
