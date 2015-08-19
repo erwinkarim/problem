@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+	force_ssl
 	before_action :authenticate_user!
 	#before_action :check_setup
 
