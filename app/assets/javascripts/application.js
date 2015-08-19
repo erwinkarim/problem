@@ -14,6 +14,7 @@
 //= require jquery-ui
 //= require jquery.turbolinks
 //= require jquery_ujs
+//= require twitter/bootstrap
 //= require paloma
 //= require turbolinks
 //= require jquery-fileupload/basic

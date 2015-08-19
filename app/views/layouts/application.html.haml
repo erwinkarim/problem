@@ -3,11 +3,9 @@
 	%head
 		%title #{ Setting.getValue('site','title') or "Problem?" }
 		= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
-		= stylesheet_link_tag '//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'
 		= stylesheet_link_tag '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
 		%meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1' }
 		= javascript_include_tag 'application', 'data-turbolinks-track' => true
-		= javascript_include_tag '//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'
 		= javascript_include_tag '//code.highcharts.com/highcharts.js'
 	%body
 		.navbar.navbar-default
