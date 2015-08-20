@@ -1,6 +1,4 @@
 = form_for @issue, { :url => @target_url } do |f|
-	= action_name
-	= controller_name
 	- if current_user.admin? then
 		.form-gorup
 			%label
