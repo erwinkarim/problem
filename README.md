@@ -70,8 +70,13 @@ Answer all the questions. The most important thing is the Common Name. Key in yo
 ### Nginx Configuration
 Install Nginx on your machine.
 
-Add the following in your /etc/nginx/nginx.conf file and be sure to take note on the upstream app and root configuration:-
+Reconfigure your nginx.conf file to the following and be sure to take note on the upstream app and root configuration:-
 ```
+server {
+	listen 80;
+	server_name <your ip address>;
+	return 301 https://<your ip address>$request_uri;
+}
 upstream app {
 	server unix:<your application dir>/tmp/unicorn.problem.sock fail_timeout=0;
 }
