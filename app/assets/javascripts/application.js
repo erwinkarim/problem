@@ -20,6 +20,8 @@
 //= require jquery-fileupload/basic
 //= require_tree .
 
+Turbolinks.enableProgressBar();
+
 $(document).on('page:change', function(){
 	$.bootstrapSortable();
 });

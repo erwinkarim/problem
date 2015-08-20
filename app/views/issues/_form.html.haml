@@ -1,4 +1,4 @@
-= form_for @issue, { :url => @target_url } do |f|
+= form_for @issue, {:url => @target_url, :html => { :id => 'issue-form'} } do |f|
 	- if current_user.admin? then
 		.form-gorup
 			%label
@@ -22,4 +22,4 @@
 			%button#extra-detail-btn.btn.btn-success{ :type => 'button' }
 				%i.fa.fa-plus
 				Add Details
-	%button.btn.btn-primary{ :type => 'submit'} Report
+	%button#submit-report.btn.btn-primary{ :type => 'button'} Report

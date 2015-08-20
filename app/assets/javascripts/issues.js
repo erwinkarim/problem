@@ -27,8 +27,7 @@ var newEditFunction = function(){
 			remote:{
 				url: '/users/search?query=%QUERY',
 				wildcard:'%QUERY',
-			},
-			local: ["one", "two", "three"]
+			}
 		});
 
 		usernames.initialize();
@@ -36,11 +35,16 @@ var newEditFunction = function(){
 		$('#affected-user').tagsinput({
 			itemValue:'displayname',
 			itemText:'displayname',
+			confirmKeys: [13,188,9],
 			typeaheadjs:[{
-					highlight:true
+					highlight:true,
+					autoselect: true
 				},{
 					display: function(suggestion){
 						return suggestion.displayname + " <" + suggestion.mail + ">";
+					},
+					templates:{
+							pending: function(){return '<div class="tt-suggestion"><i class="fa fa-spinner fa-spin"></i> Loading...</div>' }
 					},
 					source:usernames.ttAdapter()
 				}
@@ -56,30 +60,16 @@ var newEditFunction = function(){
 			$('#affected-user-mail').find('option[value="'+ event.item.mail +'"]').remove();
 		});
 
-		/*
-		$('#affected-user').typeahead({
-			delay: 300,
-			afterSelect: function(selectedData){
-				//get the current email and populate the data accordingly
-				$.get('/users/search', { query:selectedData } , function(data){
-					$('#affected-user-mail').val( data.emails[0] );
-				}, 'json')
-			},
-			source: function(query, process){
-				return $.get('/users/search', { query:query }, function(data){
-					return process(data.options);
-				}, 'json');
-			}
-		}).bind('keypress', function(e){
-			var code = e.keyCode || e.which;
-			if(code==13){
-					e.preventDefault();
-			};
-		})
-		*/
 		$(document).ready(function(){
 				$('.bootstrap-tagsinput').addClass('col-xs-12');
+				$('.bootstrap-tagsinput').find('tt-input').focus(function(e){
+						console.log('focused');
+				})
+				$('#submit-report').click( function(e){
+						$('#issue-form').submit();
+				})
 		})
+
 };
 
 IssuesController.prototype.new = function(){
